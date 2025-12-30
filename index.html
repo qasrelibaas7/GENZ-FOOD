@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MAN-O-SALWA | Gaon ka Swiggy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+<link rel="stylesheet" href="css/style.css">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<!-- Google Maps -->
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+
+</head>
+<body>
+
+<header>
+    <img src="images/logo.png" alt="MAN-O-SALWA Logo" class="logo">
+    <h1>MAN-O-SALWA</h1>
+    <p>UNDER 1KM FREE DELIVERY | ABOVE 1KM CHARGES APPLY</p>
+</header>
+
+<div class="offer">
+    🔥 Gaon ka Swiggy – Hotels • Chinese • Cafe • Home Delivery 🔥
+</div>
+
+<!-- MAP SECTION -->
+<div class="hotel">
+    <h2>Your Location</h2>
+    <div class="map" id="map"></div>
+    <p>Distance-based delivery charges applied automatically</p>
+</div>
+
+<!-- HOTELS SECTION -->
+<div class="hotel" id="hotel-harsh">
+    <h2>HOTEL HARSH • HOTEL VINOD • FADKE THAALI</h2>
+</div>
+
+<div class="hotel" id="red-dragon">
+    <h2>RED DRAGON • AAI CHINESE</h2>
+</div>
+
+<!-- CAFES SECTION -->
+<div class="hotel" id="cafes">
+    <h2>CAFES – Datta Bhel • Pizza Burger • Oleepa Cafe</h2>
+</div>
+
+<!-- FLOATING WHATSAPP BUTTON -->
+<a href="https://wa.me/917057942815" class="fixed-whatsapp">💬</a>
+
+<!-- FOOTER -->
+<footer>
+    Payment: COD | UPI: 7385009275@fam <br>
+    Donation QR available inside website
+</footer>
+
+<!-- JS -->
+<script src="js/firebase.js"></script>
+<script src="js/maps.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
