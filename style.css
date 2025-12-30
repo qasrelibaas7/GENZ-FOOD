@@ -1,137 +1,122 @@
-/* ================= BODY & HEADER ================= */
+/* General Styles */
 body {
+    font-family: 'Arial', sans-serif;
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
 header {
-    background: linear-gradient(90deg, #ff0000, #ff9800);
+    background-color: #ff7e8b;
     color: white;
+    padding: 10px;
     text-align: center;
-    padding: 15px;
-    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-header .logo {
-    width: 60px;
-    height: 60px;
-    position: absolute;
-    left: 15px;
-    top: 10px;
-    object-fit: contain;
+.logo {
+    height: 50px;
 }
 
-/* ================= OFFER BANNER ================= */
-.offer {
-    background: black;
-    color: gold;
-    padding: 6px;
-    white-space: nowrap;
-    animation: slide 12s linear infinite;
+.banner {
+    background-color: #ffeaa7;
+    padding: 20px;
     text-align: center;
-    font-weight: bold;
+}
+
+.animated-banner {
+    animation: slide 3s infinite;
 }
 
 @keyframes slide {
-    from { transform: translateX(100%); }
-    to { transform: translateX(-100%); }
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
 }
 
-/* ================= HOTEL / CAFE CARDS ================= */
-.hotel {
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#location-section {
+    margin-bottom: 20px;
+}
+
+#menu-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.hotel-cafe-card {
     background: white;
-    margin: 15px;
-    border-radius: 12px;
-    padding: 10px;
-}
-
-.hotel h2 {
-    color: #e53935;
-    margin-bottom: 10px;
-}
-
-/* ================= MENU ITEMS ================= */
-.item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.item:hover {
-    transform: scale(1.03);
-}
-
-.item img {
-    width: 70px;
-    height: 70px;
     border-radius: 10px;
-    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 15px;
+    transition: transform 0.3s;
 }
 
-.price {
-    color: green;
-    font-weight: bold;
+.hotel-cafe-card:hover {
+    transform: scale(1.05);
 }
 
-/* ================= WHATSAPP BUTTON ================= */
-.whatsapp-btn {
-    display: block;
-    text-align: center;
-    background: #25D366;
-    color: white;
-    padding: 10px;
+.item-card {
+    background: #fff;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    text-decoration: none;
-    margin-top: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
 }
 
-.fixed-whatsapp {
-    position: fixed;
-    right: 15px;
-    bottom: 15px;
-    background: #25D366;
-    color: white;
-    padding: 15px;
-    border-radius: 50%;
-    font-size: 22px;
-    text-decoration: none;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    z-index: 1000;
+.item-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-/* ================= MAP ================= */
-.map {
+.item-card img {
     width: 100%;
-    height: 200px;
-    border-radius: 10px;
-    background: #ddd; /* placeholder before map loads */
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
 }
 
-/* ================= FOOTER ================= */
 footer {
+    background-color: #333;
+    color: white;
     text-align: center;
-    padding: 15px;
-    font-size: 14px;
-    color: #555;
-    background: #eee;
-    margin-top: 20px;
+    padding: 20px;
 }
 
-/* ================= RESPONSIVE ================= */
-@media screen and (max-width: 600px) {
-    .item {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+.qr-code {
+    height: 100px;
+}
 
-    header .logo {
-        width: 50px;
-        height: 50px;
-        left: 10px;
-        top: 5px;
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.whatsapp-float img {
+    width: 40px;
+    height: 40px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+    }
+    #menu-section {
+        grid-template-columns: 1fr;
     }
 }
