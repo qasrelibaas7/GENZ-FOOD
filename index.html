@@ -1,60 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAN-O-SALWA - Village Food Delivery</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="images/logo.png" type="image/png">
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=geometry"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAN-O-SALWA</title>
+
+<!-- Manifest for PWA -->
+<link rel="manifest" href="manifest.json">
+
+<!-- CSS (Inline + External fallback) -->
+<style>
+/* ====== Combined CSS ====== */
+body {
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: #ffffff;
+    margin: 0; padding: 0;
+}
+header {
+    background: #D4AF37;
+    padding: 10px 20px;
+    text-align: center;
+    position: relative;
+}
+header img {
+    height: 50px;
+    vertical-align: middle;
+}
+header h1 {
+    display: inline;
+    margin-left: 10px;
+    font-size: 24px;
+    vertical-align: middle;
+}
+.menu-section {
+    padding: 20px;
+}
+.menu-section h2 {
+    color: #D4AF37;
+}
+.item {
+    display: flex;
+    align-items: center;
+    background: #222;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s all;
+}
+.item:hover {
+    transform: scale(1.03);
+    background: #333;
+}
+.item img {
+    height: 80px;
+    width: 80px;
+    border-radius: 8px;
+    margin-right: 15px;
+}
+.price {
+    color: #D4AF37;
+    font-weight: bold;
+}
+.floating-whatsapp {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: #25D366;
+    color: white;
+    border-radius: 50%;
+    padding: 15px;
+    font-size: 28px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 999;
+}
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #111;
+    color: #D4AF37;
+}
+footer img {
+    height: 100px;
+    margin-top: 10px;
+}
+</style>
 </head>
 <body>
-    <header>
-        <img src="images/logo.png" alt="MAN-O-SALWA Logo" class="logo">
-        <h1>MAN-O-SALWA</h1>
-        <button id="admin-login-btn">Admin Login</button>
-    </header>
-    
-    <section class="banner">
-        <div class="animated-banner">
-            <p>Exciting Offers: 20% Off on First Order! Free Delivery Under 1KM!</p>
-        </div>
-    </section>
-    
-    <main>
-        <div id="location-section">
-            <h2>Enter Your Location for Delivery</h2>
-            <input type="text" id="location-input" placeholder="Enter your address">
-            <button id="calculate-distance">Calculate Distance</button>
-            <p id="distance-result"></p>
-        </div>
-        
-        <div id="menu-section">
-            <h2>Our Hotels & Cafes</h2>
-            <div id="hotels-cafes"></div>
-        </div>
-        
-        <div id="admin-panel" style="display: none;">
-            <h2>Admin Panel - Orders</h2>
-            <div id="orders-list"></div>
-            <button id="logout-btn">Logout</button>
-        </div>
-    </main>
-    
-    <footer>
-        <p>Support Us: Scan QR for Donation</p>
-        <img src="images/donation_qr.png" alt="Donation QR" class="qr-code">
-        <p>&copy; 2023 MAN-O-SALWA. All rights reserved.</p>
-    </footer>
-    
-    <a href="https://wa.me/917057942815" class="whatsapp-float" target="_blank">
-        <img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp">
-    </a>
-    
-    <script src="script.js"></script>
+
+<!-- Header -->
+<header>
+    <img src="images/logo.png" alt="MAN-O-SALWA Logo">
+    <h1>MAN-O-SALWA</h1>
+</header>
+
+<!-- Offers Animation -->
+<div style="background:#ff3d00; color:white; text-align:center; padding:5px; animation:slide 5s infinite;">
+    🎉 Under 1KM Free Delivery | Above 1KM Delivery Charges Apply 🎉
+</div>
+<style>
+@keyframes slide {
+    0% { transform: translateX(100%); }
+    50% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+</style>
+
+<!-- Menu Sections -->
+<div class="menu-section" id="hotel-harsh">
+<h2>Hotel Harsh</h2>
+</div>
+
+<div class="menu-section" id="red-dragon">
+<h2>Red Dragon</h2>
+</div>
+
+<div class="menu-section" id="cafes">
+<h2>Cafes</h2>
+</div>
+
+<!-- Floating WhatsApp Button -->
+<div class="floating-whatsapp" onclick="window.open('https://wa.me/917057942815','_blank')">
+📱
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>Donation / Support: 7385009275@fam</p>
+    <img src="images/qr.png" alt="Donation QR">
+</footer>
+
+<!-- JS Scripts -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+// =================== MENU DATA ===================
+const menuData = {
+    "hotelHarsh": [
+        {name: "Chicken Biryani", full: 180, half: 135, img: "images/chicken_biryani.png"},
+        {name: "Veg Biryani", full: 150, half: 113, img: "images/veg_biryani.png"},
+        {name: "Beef Biryani", full: 200, half: 150, img: "images/beef_biryani.png"},
+        {name: "Chicken Gravy", full: 100, img: "images/chicken_gravy.png"},
+        {name: "Tandoori Roti", full: 30, img: "images/tandoori_roti.png"},
+        {name: "Rumali Roti", full: 20, img: "images/rumali_roti.png"}
+    ],
+    "redDragon": [
+        {name: "Chicken Triple Rice", full: 160, half: 80, img: "images/triple_rice.png"},
+        {name: "Chicken Rice", full: 120, half: 60, img: "images/chicken_rice.png"},
+        {name: "Chicken Lollipop", full: 140, half: 70, img: "images/lollipop.png"},
+        {name: "Gobi Manchurian", full: 120, half: 60, img: "images/gobi.png"},
+        {name: "Chicken Chilli", full: 150, half: 90, img: "images/chicken_chilli.png"},
+        {name: "Thousand Rice", full: 200, half: 100, img: "images/thousand_rice.png"}
+    ],
+    "cafes": [
+        {name: "Bhel", full: 50, img: "images/bhel.png"},
+        {name: "Burger", full: 80, img: "images/burger.png"},
+        {name: "Pizza", full: 120, img: "images/pizza.png"},
+        {name: "Cold Coffee", full: 60, img: "images/coffee.png"}
+    ]
+};
+
+// =================== FUNCTION TO LOAD MENU ===================
+function loadMenu(sectionId, items) {
+    const section = document.getElementById(sectionId);
+    items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'item';
+
+        // Image
+        const img = document.createElement('img');
+        img.src = item.img;
+        div.appendChild(img);
+
+        // Name + Price
+        const details = document.createElement('div');
+        let priceText = item.half ? `Full ₹${item.full} | Half ₹${item.half}` : `₹${item.full}`;
+        details.innerHTML = `${item.name}<br><span class="price">${priceText}</span>`;
+        div.appendChild(details);
+
+        // Click event for WhatsApp order
+        div.addEventListener('click', () => {
+            orderWhatsApp(item.name, item.full, item.half);
+        });
+
+        section.appendChild(div);
+    });
+}
+
+// =================== FUNCTION TO OPEN WHATSAPP ===================
+function orderWhatsApp(itemName, fullPrice, halfPrice) {
+    let message = `Order: ${itemName} `;
+    if(halfPrice){
+        message += `(Full ₹${fullPrice} / Half ₹${halfPrice})`;
+    } else {
+        message += `(₹${fullPrice})`;
+    }
+    message += " - MAN-O-SALWA";
+    window.open(`https://wa.me/917057942815?text=${encodeURIComponent(message)}`);
+}
+
+// =================== INITIALIZE ===================
+window.onload = function(){
+    loadMenu('hotel-harsh', menuData.hotelHarsh);
+    loadMenu('red-dragon', menuData.redDragon);
+    loadMenu('cafes', menuData.cafes);
+};
+</script>
+
 </body>
 </html>
