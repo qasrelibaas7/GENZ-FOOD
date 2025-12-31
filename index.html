@@ -1,203 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GENZ FOOD Menu</title>
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 20px;
-}
-h1 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 30px;
-}
-.menu-section {
-  margin-bottom: 50px;
-}
-.menu-section h2 {
-  color: #D4AF37;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #D4AF37;
-  display: inline-block;
-  padding-bottom: 5px;
-}
-.cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-.card {
-  background-color: #fff;
-  width: 200px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  text-align: center;
-  transition: transform 0.2s ease;
-}
-.card img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-}
-.card h4 {
-  margin: 10px 0 5px 0;
-  font-size: 16px;
-}
-.card span {
-  display: block;
-  margin-bottom: 10px;
-  color: #555;
-}
-.card:hover {
-  transform: scale(1.05);
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GENZ FOOD | Premium Village Delivery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #D4AF37; --light-gold: #fcf8e8; }
+        body { font-family: 'Poppins', sans-serif; background-color: #fcfcfc; scroll-behavior: smooth; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        .gold-gradient { background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%); }
+        .food-card { 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        .food-card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.15);
+            border-color: var(--gold);
+        }
+        .whatsapp-btn {
+            background-color: #25D366;
+            transition: 0.3s;
+        }
+        .whatsapp-btn:hover { background-color: #128C7E; transform: scale(1.05); }
+        .category-pill {
+            scroll-snap-align: start;
+            flex-shrink: 0;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
 </head>
 <body>
 
-<h1>GENZ FOOD Menu</h1>
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gold">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex flex-col">
+                <span class="text-2xl font-bold tracking-tighter leading-none">GENZ <span class="text-[#D4AF37]">FOOD</span></span>
+                <span class="text-[10px] uppercase tracking-[0.2em] text-gray-400">Premium Delivery</span>
+            </div>
+            <div class="text-sm font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                Village Special 📍
+            </div>
+        </div>
+        <div class="flex overflow-x-auto hide-scrollbar py-3 px-4 gap-3 bg-white border-t border-gray-50">
+            <a href="#hotel-harsh" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Hotel Harsh</a>
+            <a href="#woleeepa" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Woleeepa Cafe</a>
+            <a href="#fadke" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Fadke Thaali</a>
+            <a href="#vinod" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Hotel Vinod</a>
+            <a href="#red-dragon" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Red Dragon</a>
+            <a href="#aai-chinese" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">AAI Chinese</a>
+            <a href="#datta-bhel" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Datta Bhel</a>
+        </div>
+    </header>
 
-<!-- ================== Hotel Harsh ================== -->
-<div class="menu-section">
-<h2>Hotel Harsh</h2>
-<div class="cards-container">
-  <div class="card"><img src="images/hotel-harsh/chicken-dry-fry.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Dry Fry</h4><span>₹90 / ₹160</span></div>
-  <div class="card"><img src="images/hotel-harsh/egg-bhurji.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Egg Bhurji</h4><span>₹50</span></div>
-  <div class="card"><img src="images/hotel-harsh/chicken-kabab.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Kabab</h4><span>₹100</span></div>
-  <div class="card"><img src="images/hotel-harsh/special-chicken-curry.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Special Chicken Curry</h4><span>₹120</span></div>
-  <div class="card"><img src="images/hotel-harsh/chicken-masala.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Masala</h4><span>₹130</span></div>
-  <div class="card"><img src="images/hotel-harsh/mutton-curry.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Mutton Curry</h4><span>₹180</span></div>
-  <div class="card"><img src="images/hotel-harsh/egg-curry.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Egg Curry</h4><span>₹80</span></div>
-  <div class="card"><img src="images/hotel-harsh/chicken-dum-biryani.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Dum Biryani</h4><span>₹140</span></div>
-  <div class="card"><img src="images/hotel-harsh/kuska.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Kuska (Biryani Rice)</h4><span>₹70</span></div>
-  <div class="card"><img src="images/hotel-harsh/egg-biryani.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Egg Biryani</h4><span>₹100</span></div>
-  <div class="card"><img src="images/hotel-harsh/plain-rice.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Plain Rice</h4><span>₹40</span></div>
-  <div class="card"><img src="images/hotel-harsh/tandoori-roti.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Tandoori Roti / Chapati</h4><span>₹10-₹15</span></div>
-  <div class="card"><img src="images/hotel-harsh/butter-roti.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Butter Roti</h4><span>₹20</span></div>
-  <div class="card"><img src="images/hotel-harsh/chicken-thali.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Thali</h4><span>₹150</span></div>
-  <div class="card"><img src="images/hotel-harsh/egg-thali.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Egg Thali</h4><span>₹100</span></div>
-</div>
-</div>
+    <main class="container mx-auto px-4 py-8">
 
-<!-- ================== Woleeepa Cafe ================== -->
-<div class="menu-section">
-<h2>Woleeepa Cafe</h2>
-<div class="cards-container">
-  <div class="card"><img src="images/woleeepa-cafe/special-masala-chai.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Special Masala Chai</h4><span>₹20</span></div>
-  <div class="card"><img src="images/woleeepa-cafe/cold-coffee.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Cold Coffee (Classic)</h4><span>₹60</span></div>
-  <div class="card"><img src="images/woleeepa-cafe/hot-coffee.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Hot Coffee / Cappuccino</h4><span>₹40</span></div>
-  <div class="card"><img src="images/woleeepa-cafe/lemon-iced-tea.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Lemon Iced Tea</h4><span>₹50</span></div>
-  <div class="card"><img src="images/woleeepa-cafe/chicken-sandwich.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Sandwich (Grilled)</h4><span>₹80</span></div>
-  <div class="card"><img src="images/woleeepa-cafe/chicken-nuggets.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Nuggets (6 Pcs)</h4><span>₹90</span></div>
-  <div class="card"><img src="images/woleeepa-cafe/egg-cheese-burger.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Egg Cheese Burger</h4><span>₹70</span></div>
-  <div class="card"><img src="images/woleeepa-cafe/chicken-popcorn.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Popcorn</h4><span>₹100</span></div>
-  <div class="card"><img src="images/woleeepa-cafe/veg-cheese-sandwich.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Veg Cheese Sandwich</h4><span>₹60</span></div>
-  <div class="card"><img src="images/woleeepa-cafe/french-fries.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Crispy French Fries</h4><span>₹50</span></div>
-  <div class="card"><img src="images/woleeepa-cafe/veg-paneer-burger.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Veg Paneer Burger</h4><span>₹80</span></div>
-  <div class="card"><img src="images/woleeepa-cafe/classic-maggi.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Classic Maggi (Masala)</h4><span>₹40</span></div>
-  <div class="card"><img src="images/woleeepa-cafe/egg-maggi.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Egg Maggi</h4><span>₹60</span></div>
-  <div class="card"><img src="images/woleeepa-cafe/garlic-bread.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Garlic Bread (3 Pcs)</h4><span>₹50</span></div>
-  <div class="card"><img src="images/woleeepa-cafe/bun-maska.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Bun Maska</h4><span>₹30</span></div>
-</div>
-</div>
+        <div id="menu-container"></div>
 
-<!-- ================== Hotel FADKE THAALI ================== -->
-<div class="menu-section">
-<h2>Hotel FADKE THAALI</h2>
-<div class="cards-container">
-  <div class="card"><img src="images/fadke-thaali/veg-manchurian.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Veg Manchurian (Dry)</h4><span>₹80</span></div>
-  <div class="card"><img src="images/fadke-thaali/paneer-65.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Paneer 65</h4><span>₹120</span></div>
-  <div class="card"><img src="images/fadke-thaali/hara-bhara-kabab.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Hara Bhara Kabab</h4><span>₹90</span></div>
-  <div class="card"><img src="images/fadke-thaali/paneer-butter-masala.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Paneer Butter Masala</h4><span>₹140</span></div>
-  <div class="card"><img src="images/fadke-thaali/kadhai-paneer.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Kadhai Paneer</h4><span>₹150</span></div>
-  <div class="card"><img src="images/fadke-thaali/mix-veg-curry.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Mix Veg Curry</h4><span>₹100</span></div>
-  <div class="card"><img src="images/fadke-thaali/dal-tadka.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Dal Tadka (Arhar)</h4><span>₹80</span></div>
-  <div class="card"><img src="images/fadke-thaali/dal-makhani.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Dal Makhani</h4><span>₹110</span></div>
-  <div class="card"><img src="images/fadke-thaali/chole-masala.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chole Masala</h4><span>₹90</span></div>
-  <div class="card"><img src="images/fadke-thaali/veg-hyderabadi-biryani.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Veg Hyderabadi Biryani</h4><span>₹120</span></div>
-  <div class="card"><img src="images/fadke-thaali/jeera-rice.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Jeera Rice</h4><span>₹60</span></div>
-  <div class="card"><img src="images/fadke-thaali/veg-pulao.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Veg Pulao</h4><span>₹90</span></div>
-  <div class="card"><img src="images/fadke-thaali/butter-roti.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Butter Roti / Naan</h4><span>₹15-₹30</span></div>
-  <div class="card"><img src="images/fadke-thaali/special-veg-thali.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Special Veg Thali</h4><span>₹150</span></div>
-  <div class="card"><img src="images/fadke-thaali/mini-thali.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Mini Thali</h4><span>₹90</span></div>
-</div>
-</div>
+        <script>
+            const menuData = [
+                {
+                    id: "hotel-harsh",
+                    name: "Hotel Harsh",
+                    items: [
+                        { name: "Chicken Dry Fry", price: "₹90 / ₹160" },
+                        { name: "Egg Bhurji", price: "₹50" },
+                        { name: "Chicken Kabab", price: "₹100" },
+                        { name: "Special Chicken Curry", price: "₹120" },
+                        { name: "Chicken Masala", price: "₹130" },
+                        { name: "Mutton Curry", price: "₹180" },
+                        { name: "Egg Curry", price: "₹80" },
+                        { name: "Chicken Dum Biryani", price: "₹140" },
+                        { name: "Kuska (Biryani Rice)", price: "₹70" },
+                        { name: "Egg Biryani", price: "₹100" },
+                        { name: "Plain Rice", price: "₹40" },
+                        { name: "Tandoori Roti / Chapati", price: "₹10-₹15" },
+                        { name: "Butter Roti", price: "₹20" },
+                        { name: "Chicken Thali", price: "₹150" },
+                        { name: "Egg Thali", price: "₹100" }
+                    ]
+                },
+                {
+                    id: "woleeepa",
+                    name: "Woleeepa Cafe",
+                    items: [
+                        { name: "Special Masala Chai", price: "₹20" },
+                        { name: "Cold Coffee", price: "₹60" },
+                        { name: "Hot Coffee / Cappuccino", price: "₹40" },
+                        { name: "Lemon Iced Tea", price: "₹50" },
+                        { name: "Chicken Sandwich", price: "₹80" },
+                        { name: "Chicken Nuggets", price: "₹90" },
+                        { name: "Egg Cheese Burger", price: "₹70" },
+                        { name: "Chicken Popcorn", price: "₹100" },
+                        { name: "Veg Cheese Sandwich", price: "₹60" },
+                        { name: "Crispy French Fries", price: "₹50" },
+                        { name: "Veg Paneer Burger", price: "₹80" },
+                        { name: "Classic Maggi", price: "₹40" },
+                        { name: "Egg Maggi", price: "₹60" },
+                        { name: "Garlic Bread", price: "₹50" },
+                        { name: "Bun Maska", price: "₹30" }
+                    ]
+                },
+                {
+                    id: "fadke",
+                    name: "Hotel FADKE THAALI",
+                    items: [
+                        { name: "Veg Manchurian Dry", price: "₹80" },
+                        { name: "Paneer 65", price: "₹120" },
+                        { name: "Hara Bhara Kabab", price: "₹90" },
+                        { name: "Paneer Butter Masala", price: "₹140" },
+                        { name: "Kadhai Paneer", price: "₹150" },
+                        { name: "Mix Veg Curry", price: "₹100" },
+                        { name: "Dal Tadka", price: "₹80" },
+                        { name: "Dal Makhani", price: "₹110" },
+                        { name: "Chole Masala", price: "₹90" },
+                        { name: "Veg Hyderabadi Biryani", price: "₹120" },
+                        { name: "Jeera Rice", price: "₹60" },
+                        { name: "Veg Pulao", price: "₹90" },
+                        { name: "Butter Roti / Naan", price: "₹15-₹30" },
+                        { name: "Special Veg Thali", price: "₹150" },
+                        { name: "Mini Thali", price: "₹90" }
+                    ]
+                },
+                {
+                    id: "vinod",
+                    name: "Hotel Vinod",
+                    items: [
+                        { name: "Cold Coffee with Ice Cream", price: "₹80" },
+                        { name: "Masala Fries", price: "₹60" },
+                        { name: "Chicken Grilled Sandwich", price: "₹90" },
+                        { name: "Veg Cheese Burger", price: "₹80" },
+                        { name: "Paneer Butter Masala", price: "₹140" },
+                        { name: "Dal Tadka", price: "₹80" },
+                        { name: "Mix Veg Masala", price: "₹100" },
+                        { name: "Chicken Curry", price: "₹130" },
+                        { name: "Butter Chicken", price: "₹160" },
+                        { name: "Egg Masala", price: "₹90" },
+                        { name: "Chicken Dum Biryani", price: "₹150" },
+                        { name: "Veg Pulao / Jeera Rice", price: "₹90" },
+                        { name: "Tandoori Roti / Butter Roti", price: "₹15 / ₹20" },
+                        { name: "Executive Veg Thali", price: "₹120" },
+                        { name: "Chicken Thali", price: "₹160" }
+                    ]
+                },
+                {
+                    id: "red-dragon",
+                    name: "Red Dragon",
+                    items: [
+                        { name: "Veg Hakka Noodles", price: "₹60 / ₹100" },
+                        { name: "Egg Chowmein", price: "₹70 / ₹120" },
+                        { name: "Chicken Noodles", price: "₹90 / ₹150" },
+                        { name: "Schezwan Noodles", price: "₹80" },
+                        { name: "Veg Fried Rice", price: "₹70" },
+                        { name: "Chicken Fried Rice", price: "₹100" },
+                        { name: "Triple Schezwan Rice", price: "₹150" },
+                        { name: "Veg Manchurian Dry", price: "₹80" },
+                        { name: "Chicken Lollipop", price: "₹150" },
+                        { name: "Chilli Paneer Dry", price: "₹120" },
+                        { name: "Chilli Chicken Dry", price: "₹130" },
+                        { name: "Veg Manchurian Gravy", price: "₹90" },
+                        { name: "Chicken Chilli Gravy", price: "₹140" },
+                        { name: "Veg Manchow Soup", price: "₹50" },
+                        { name: "Chicken Hot & Sour Soup", price: "₹70" }
+                    ]
+                },
+                {
+                    id: "aai-chinese",
+                    name: "AAI Chinese",
+                    items: [
+                        { name: "Veg Steamed Momos", price: "₹60" },
+                        { name: "Chicken Fried Momos", price: "₹100" },
+                        { name: "Kurkure Paneer Momos", price: "₹120" },
+                        { name: "Tandoori Chicken Momos", price: "₹140" },
+                        { name: "Honey Chilli Potato", price: "₹80" },
+                        { name: "Dragon Chicken", price: "₹150" },
+                        { name: "Crispy Corn Pepper Salt", price: "₹100" },
+                        { name: "Chicken Drumsticks", price: "₹160" },
+                        { name: "Singapore Rice / Noodles", price: "₹110" },
+                        { name: "Burnt Garlic Fried Rice", price: "₹90" },
+                        { name: "Pot Rice", price: "₹160" },
+                        { name: "American Chopsuey", price: "₹130" },
+                        { name: "Veg Spring Roll", price: "₹70" },
+                        { name: "Chicken Egg Roll", price: "₹60" },
+                        { name: "Chicken Manchurian Roll", price: "₹80" }
+                    ]
+                },
+                {
+                    id: "datta-bhel",
+                    name: "Datta Bhel",
+                    items: [
+                        { name: "Classic Pani Puri", price: "₹30" },
+                        { name: "Jeera/Hing Pani Puri", price: "₹30" },
+                        { name: "Chocolate Pani Puri", price: "₹60" },
+                        { name: "Sukha Puri", price: "₹30" },
+                        { name: "Masala Puri", price: "₹40" },
+                        { name: "Dahi Puri", price: "₹50" },
+                        { name: "Sev Puri", price: "₹40" },
+                        { name: "Classic Bhel Puri", price: "₹40" },
+                        { name: "Sukha Bhel", price: "₹35" },
+                        { name: "Corn Bhel", price: "₹50" },
+                        { name: "Aloo Tikki Chaat", price: "₹60" },
+                        { name: "Samosa Chaat", price: "₹60" },
+                        { name: "Papdi Chaat", price: "₹50" },
+                        { name: "Raj Kachori", price: "₹100" },
+                        { name: "Masala Pav", price: "₹40" }
+                    ]
+                }
+            ];
 
-<!-- ================== Hotel Vinod ================== -->
-<div class="menu-section">
-<h2>Hotel Vinod</h2>
-<div class="cards-container">
-  <div class="card"><img src="images/hotel-vinod/cold-coffee-ice-cream.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Cold Coffee with Ice Cream</h4><span>₹80</span></div>
-  <div class="card"><img src="images/hotel-vinod/masala-fries.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Masala Fries (Large)</h4><span>₹60</span></div>
-  <div class="card"><img src="images/hotel-vinod/chicken-grilled-sandwich.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Grilled Sandwich</h4><span>₹90</span></div>
-  <div class="card"><img src="images/hotel-vinod/veg-cheese-burger.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Veg Cheese Burger</h4><span>₹80</span></div>
-  <div class="card"><img src="images/hotel-vinod/paneer-butter-masala.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Paneer Butter Masala</h4><span>₹140</span></div>
-  <div class="card"><img src="images/hotel-vinod/dal-tadka.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Dal Tadka (Desi Ghee)</h4><span>₹80</span></div>
-  <div class="card"><img src="images/hotel-vinod/mix-veg-masala.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Mix Veg Masala</h4><span>₹100</span></div>
-  <div class="card"><img src="images/hotel-vinod/chicken-curry.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Curry (Home Style)</h4><span>₹130</span></div>
-  <div class="card"><img src="images/hotel-vinod/butter-chicken.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Butter Chicken (Special)</h4><span>₹160</span></div>
-  <div class="card"><img src="images/hotel-vinod/egg-masala.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Egg Masala (2 Eggs)</h4><span>₹90</span></div>
-  <div class="card"><img src="images/hotel-vinod/chicken-dum-biryani.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Dum Biryani</h4><span>₹150</span></div>
-  <div class="card"><img src="images/hotel-vinod/veg-pulao.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Veg Pulao / Jeera Rice</h4><span>₹90</span></div>
-  <div class="card"><img src="images/hotel-vinod/tandoori-roti.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Tandoori Roti / Butter Roti</h4><span>₹15 / ₹20</span></div>
-  <div class="card"><img src="images/hotel-vinod/executive-veg-thali.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Executive Veg Thali</h4><span>₹120</span></div>
-  <div class="card"><img src="images/hotel-vinod/chicken-thali.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Thali (Rice+Roti+Curry)</h4><span>₹160</span></div>
-</div>
-</div>
+            const container = document.getElementById('menu-container');
+            const WHATSAPP_NUMBER = "917385009275"; // Replace with real delivery number
 
-<!-- ================== Datta Bhel ================== -->
-<div class="menu-section">
-<h2>Datta Bhel</h2>
-<div class="cards-container">
-  <div class="card"><img src="images/datta-bhel/classic-pani-puri.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Classic Pani Puri</h4><span>₹30</span></div>
-  <div class="card"><img src="images/datta-bhel/jeera-hing-pani-puri.jpg" onerror="this.src
+            menuData.forEach(hotel => {
+                let hotelSection = `
+                    <section id="${hotel.id}" class="mb-20">
+                        <div class="flex items-center mb-8">
+                            <h2 class="text-3xl font-bold border-l-4 border-[#D4AF37] pl-4">${hotel.name}</h2>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                `;
 
-                      <!-- ================== Red Dragon ================== -->
-<div class="menu-section">
-<h2>Red Dragon</h2>
-<div class="cards-container">
-  <div class="card"><img src="images/red-dragon/veg-hakka-noodles.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Veg Hakka Noodles</h4><span>₹60 / ₹100</span></div>
-  <div class="card"><img src="images/red-dragon/egg-chowmein.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Egg Chowmein</h4><span>₹70 / ₹120</span></div>
-  <div class="card"><img src="images/red-dragon/chicken-noodles.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Noodles</h4><span>₹90 / ₹150</span></div>
-  <div class="card"><img src="images/red-dragon/schezwan-noodles.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Schezwan Noodles (Spicy)</h4><span>₹80</span></div>
-  <div class="card"><img src="images/red-dragon/veg-fried-rice.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Veg Fried Rice</h4><span>₹70</span></div>
-  <div class="card"><img src="images/red-dragon/chicken-fried-rice.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Fried Rice</h4><span>₹100</span></div>
-  <div class="card"><img src="images/red-dragon/triple-schezwan-rice.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Triple Schezwan Rice (with Gravy)</h4><span>₹150</span></div>
-  <div class="card"><img src="images/red-dragon/veg-manchurian-dry.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Veg Manchurian Dry</h4><span>₹80</span></div>
-  <div class="card"><img src="images/red-dragon/chicken-lollipop.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Lollipop (6 Pcs)</h4><span>₹150</span></div>
-  <div class="card"><img src="images/red-dragon/chilli-paneer.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chilli Paneer Dry</h4><span>₹120</span></div>
-  <div class="card"><img src="images/red-dragon/chilli-chicken.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chilli Chicken Dry</h4><span>₹130</span></div>
-  <div class="card"><img src="images/red-dragon/veg-manchurian-gravy.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Veg Manchurian Gravy</h4><span>₹90</span></div>
-  <div class="card"><img src="images/red-dragon/chicken-chilli-gravy.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Chilli Gravy</h4><span>₹140</span></div>
-  <div class="card"><img src="images/red-dragon/veg-manchow-soup.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Veg Manchow Soup</h4><span>₹50</span></div>
-  <div class="card"><img src="images/red-dragon/chicken-hot-sour-soup.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Hot & Sour Soup</h4><span>₹70</span></div>
-</div>
-</div>
+                hotel.items.forEach(item => {
+                    // Image logic: converts name to kebab-case
+                    const imgName = item.name.toLowerCase().replace(/ /g, '-').replace(/[()]/g, '');
+                    const imgSrc = `images/${hotel.id}/${imgName}.jpg`;
+                    const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=Hi GENZ FOOD, I want to order *${item.name}* from *${hotel.name}*`;
 
-<!-- ================== AAI Chinese ================== -->
-<div class="menu-section">
-<h2>AAI Chinese</h2>
-<div class="cards-container">
-  <div class="card"><img src="images/aai-chinese/veg-steamed-momos.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Veg Steamed Momos</h4><span>₹60</span></div>
-  <div class="card"><img src="images/aai-chinese/chicken-fried-momos.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Fried Momos</h4><span>₹100</span></div>
-  <div class="card"><img src="images/aai-chinese/kurkure-paneer-momos.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Kurkure Paneer Momos</h4><span>₹120</span></div>
-  <div class="card"><img src="images/aai-chinese/tandoori-chicken-momos.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Tandoori Chicken Momos</h4><span>₹140</span></div>
-  <div class="card"><img src="images/aai-chinese/honey-chilli-potato.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Honey Chilli Potato</h4><span>₹80</span></div>
-  <div class="card"><img src="images/aai-chinese/dragon-chicken.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Dragon Chicken</h4><span>₹150</span></div>
-  <div class="card"><img src="images/aai-chinese/crispy-corn.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Crispy Corn Pepper Salt</h4><span>₹100</span></div>
-  <div class="card"><img src="images/aai-chinese/chicken-drumsticks.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Drumsticks (4 Pcs)</h4><span>₹160</span></div>
-  <div class="card"><img src="images/aai-chinese/singapore-rice-noodles.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Singapore Rice / Noodles</h4><span>₹110</span></div>
-  <div class="card"><img src="images/aai-chinese/burnt-garlic-fried-rice.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Burnt Garlic Fried Rice</h4><span>₹90</span></div>
-  <div class="card"><img src="images/aai-chinese/pot-rice.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Pot Rice (Veg / Non-Veg)</h4><span>₹160</span></div>
-  <div class="card"><img src="images/aai-chinese/american-chopsuey.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>American Chopsuey</h4><span>₹130</span></div>
-  <div class="card"><img src="images/aai-chinese/veg-spring-roll.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Veg Spring Roll</h4><span>₹70</span></div>
-  <div class="card"><img src="images/aai-chinese/chicken-egg-roll.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Egg Roll</h4><span>₹60</span></div>
-  <div class="card"><img src="images/aai-chinese/chicken-manchurian-roll.jpg" onerror="this.src='images/common-placeholder.jpg'"><h4>Chicken Manchurian Roll</h4><span>₹80</span></div>
-</div>
-</div>
+                    hotelSection += `
+                        <div class="food-card bg-white rounded-2xl overflow-hidden shadow-sm flex flex-col">
+                            <div class="h-44 overflow-hidden relative">
+                                <img src="${imgSrc}" onerror="this.src='images/common-placeholder.jpg'" 
+                                     alt="${item.name}" class="w-full h-full object-cover">
+                                <div class="absolute top-2 right-2 bg-white/90 px-2 py-1 rounded-lg text-[10px] font-bold gold-text shadow-sm">
+                                    PREMIUM
+                                </div>
+                            </div>
+                            <div class="p-4 flex flex-col flex-grow">
+                                <h4 class="font-bold text-gray-800 text-lg mb-1 leading-tight">${item.name}</h4>
+                                <p class="text-[#B8860B] font-bold text-xl mb-4">${item.price}</p>
+                                <div class="mt-auto">
+                                    <a href="${waLink}" target="_blank" class="whatsapp-btn flex items-center justify-center gap-2 text-white py-3 rounded-xl font-bold shadow-lg shadow-green-100">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                        Order on WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                hotelSection += `</div></section>`;
+                container.innerHTML += hotelSection;
+            });
+        </script>
+    </main>
+
+    <footer class="bg-white border-t border-gray-100 py-12">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold mb-4">GENZ <span class="text-[#D4AF37]">FOOD</span></h2>
+            <p class="text-gray-400 max-w-md mx-auto mb-6 text-sm">Fresh food delivered from your favorite local hotels directly to your doorstep via WhatsApp.</p>
+            <div class="flex justify-center gap-4 text-gray-400 mb-8">
+                <span class="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center">FB</span>
+                <span class="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center">IG</span>
+            </div>
+            <p class="text-[10px] text-gray-300 uppercase tracking-widest">© 2025 GENZ FOOD Delivery Service</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
