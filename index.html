@@ -1,4 +1,4 @@
-l<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -54,14 +54,16 @@ l<!DOCTYPE html>
             <a href="#datta-bhel" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Datta Bhel</a>
         </div>
     </header>
-        <div class="px-4 py-4 bg-[#fcfcfc] sticky top-[105px] z-40 border-b border-gray-100">
+
+    <div class="px-4 py-4 bg-[#fcfcfc] sticky top-[105px] z-40 border-b border-gray-100">
         <div class="relative max-w-md mx-auto">
-            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             <input type="text" id="searchInput" onkeyup="filterMenu()" 
-                placeholder="Search for dishes..." 
-                class="w-full pl-11 pr-4 py-3 bg-white border border-gray-200 rounded-2xl shadow-sm text-sm focus:ring-2 focus:ring-[#D4AF37] outline-none transition-all placeholder:text-gray-400">
+                placeholder="Search for dishes (e.g. Biryani)..." 
+                class="w-full pl-11 pr-4 py-3 bg-white border border-gray-200 rounded-2xl shadow-sm text-sm focus:ring-2 focus:ring-[#D4AF37] outline-none transition-all">
         </div>
-        </div>
+    </div>
+
     <main class="container mx-auto px-4 py-8">
 
         <div id="menu-container"></div>
@@ -192,7 +194,7 @@ l<!DOCTYPE html>
             ];
 
             const container = document.getElementById('menu-container');
-            const WHATSAPP_NUMBER = "917385009275"; // Replace with real delivery number
+            const WHATSAPP_NUMBER = "917385009275"; 
 
             menuData.forEach(hotel => {
                 let hotelSection = `
@@ -204,7 +206,6 @@ l<!DOCTYPE html>
                 `;
 
                 hotel.items.forEach(item => {
-                    // Image logic: converts name to kebab-case
                     const imgName = item.name.toLowerCase().replace(/ /g, '-').replace(/[()]/g, '');
                     const imgSrc = `images/${hotel.id}/${imgName}.jpg`;
                     const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=Hi GENZ FOOD, I want to order *${item.name}* from *${hotel.name}*`;
@@ -235,6 +236,27 @@ l<!DOCTYPE html>
                 hotelSection += `</div></section>`;
                 container.innerHTML += hotelSection;
             });
+
+            // New Search Filter Function
+            function filterMenu() {
+                const input = document.getElementById('searchInput').value.toLowerCase();
+                const cards = document.getElementsByClassName('food-card');
+                const sections = document.querySelectorAll('section');
+
+                for (let card of cards) {
+                    const title = card.querySelector('h4').innerText.toLowerCase();
+                    if (title.includes(input)) {
+                        card.style.display = "flex";
+                    } else {
+                        card.style.display = "none";
+                    }
+                }
+
+                sections.forEach(section => {
+                    const visibleCards = Array.from(section.querySelectorAll('.food-card')).filter(c => c.style.display !== "none");
+                    section.style.display = visibleCards.length > 0 ? "block" : "none";
+                });
+            }
         </script>
     </main>
 
@@ -252,3 +274,4 @@ l<!DOCTYPE html>
 
 </body>
 </html>
+
