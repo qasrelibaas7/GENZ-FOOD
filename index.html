@@ -30,6 +30,7 @@
             flex-shrink: 0;
         }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .comment-box { cursor: pointer; user-select: none; }
     </style>
 </head>
 <body>
@@ -70,27 +71,20 @@
         <section class="mt-20 mb-12">
             <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl shadow-sm border border-[#D4AF37]/20">
                 <h3 class="text-2xl font-bold mb-2 text-center">Customer Reviews 🥰</h3>
-                <p class="text-gray-400 text-sm text-center mb-8">Hamare khane ke baare mein kya kehte hain log?</p>
+                <p class="text-gray-400 text-sm text-center mb-8">Triple-click a comment to delete it (Admin Secret)</p>
                 
                 <form id="feedbackForm" class="space-y-4 mb-10">
                     <input type="text" id="fbName" placeholder="Aapka Naam" required 
                         class="w-full px-4 py-3 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-[#D4AF37] outline-none">
-                    
                     <textarea id="fbText" placeholder="Review likhein..." rows="3" required
                         class="w-full px-4 py-3 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-[#D4AF37] outline-none"></textarea>
-                    
                     <button type="submit" class="w-full gold-gradient text-white font-bold py-4 rounded-xl shadow-lg hover:opacity-90 transition-all">
                         Post Review
                     </button>
                 </form>
 
                 <div id="reviewsContainer" class="space-y-4">
-                    <div class="bg-gray-50 p-4 rounded-2xl border-l-4 border-[#D4AF37]">
-                        <p class="font-bold text-sm text-gray-800">Aman Sharma</p>
-                        <p class="text-gray-600 text-sm italic mt-1">"Hotel Harsh ki Biryani bahut lajawab hai! On time delivery."</p>
-                        <span class="text-[9px] text-gray-400 uppercase mt-2 block">Verified Review</span>
                     </div>
-                </div>
             </div>
         </section>
 
@@ -282,50 +276,55 @@
                 });
             }
 
-            // --- FEEDBACK & REVIEW LOGIC ---
+            // --- FEEDBACK & SECRET DELETE LOGIC ---
             const feedbackForm = document.getElementById('feedbackForm');
             const reviewsContainer = document.getElementById('reviewsContainer');
 
-            // Load saved reviews from LocalStorage on page load
-            window.addEventListener('load', () => {
-                const savedReviews = JSON.parse(localStorage.getItem('genzFoodReviews')) || [];
-                savedReviews.forEach(rev => displayReview(rev.name, rev.text));
-            });
+            window.addEventListener('load', loadReviews);
 
             feedbackForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const name = document.getElementById('fbName').value;
                 const text = document.getElementById('fbText').value;
+                const timestamp = Date.now();
 
-                // 1. WhatsApp Link (Optional: if you still want a message)
-                const fbLink = `https://wa.me/${WHATSAPP_NUMBER}?text=New Review from *${name}*: %0A${text}`;
-                
-                // 2. Display on website immediately
-                displayReview(name, text);
+                const newReview = { id: timestamp, name, text };
+                const reviews = JSON.parse(localStorage.getItem('genzFoodReviews')) || [];
+                reviews.push(newReview);
+                localStorage.setItem('genzFoodReviews', JSON.stringify(reviews));
 
-                // 3. Save to LocalStorage
-                saveReview(name, text);
-
-                // 4. Open WhatsApp and Reset Form
-                window.open(fbLink, '_blank');
+                renderReview(newReview);
                 this.reset();
             });
 
-            function displayReview(name, text) {
+            function loadReviews() {
+                reviewsContainer.innerHTML = '';
+                const reviews = JSON.parse(localStorage.getItem('genzFoodReviews')) || [];
+                reviews.forEach(renderReview);
+            }
+
+            function renderReview(rev) {
                 const reviewHTML = `
-                    <div class="bg-gray-50 p-4 rounded-2xl border-l-4 border-[#D4AF37] animate-fade-in">
-                        <p class="font-bold text-sm text-gray-800">${name}</p>
-                        <p class="text-gray-600 text-sm italic mt-1">"${text}"</p>
-                        <span class="text-[9px] text-gray-400 uppercase mt-2 block">Customer Review</span>
+                    <div class="bg-gray-50 p-4 rounded-2xl border-l-4 border-[#D4AF37] comment-box" 
+                         id="rev-${rev.id}" onclick="handleTripleClick(event, ${rev.id})">
+                        <p class="font-bold text-sm text-gray-800">${rev.name}</p>
+                        <p class="text-gray-600 text-sm italic mt-1">"${rev.text}"</p>
+                        <span class="text-[9px] text-gray-400 uppercase mt-2 block">Verified Review</span>
                     </div>
                 `;
                 reviewsContainer.insertAdjacentHTML('afterbegin', reviewHTML);
             }
 
-            function saveReview(name, text) {
-                const reviews = JSON.parse(localStorage.getItem('genzFoodReviews')) || [];
-                reviews.push({ name, text });
-                localStorage.setItem('genzFoodReviews', JSON.stringify(reviews));
+            function handleTripleClick(event, id) {
+                if (event.detail === 3) {
+                    const confirmDelete = confirm("Do you want to delete this comment?");
+                    if (confirmDelete) {
+                        let reviews = JSON.parse(localStorage.getItem('genzFoodReviews')) || [];
+                        reviews = reviews.filter(r => r.id !== id);
+                        localStorage.setItem('genzFoodReviews', JSON.stringify(reviews));
+                        loadReviews();
+                    }
+                }
             }
         </script>
     </main>
@@ -333,8 +332,8 @@
     <footer class="bg-white border-t border-gray-100 py-12">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-2xl font-bold mb-4">GENZ <span class="text-[#D4AF37]">FOOD</span></h2>
-            <p class="text-gray-400 max-w-md mx-auto mb-6 text-sm">Fresh food delivered from your favorite local hotels directly to your doorstep via WhatsApp.</p>
-            <p class="text-[10px] text-gray-300 uppercase tracking-widest">© 2025 GENZ FOOD Delivery Service</p>
+            <p class="text-gray-400 max-w-md mx-auto mb-6 text-sm">Premium Delivery Service</p>
+            <p class="text-[10px] text-gray-300 uppercase tracking-widest">© 2025 GENZ FOOD</p>
         </div>
     </footer>
 
