@@ -7,97 +7,85 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #D4AF37; --light-gold: #fcf8e8; }
-        body.dark-mode { background-color: #121212; color: #ffffff; }
-        .dark-mode header, .dark-mode .bg-white, .dark-mode footer, .dark-mode #cart-bar { background-color: #1e1e1e !important; color: white; border-color: #333 !important; }
-        .dark-mode .food-card { background-color: #252525 !important; border-color: #333; }
-        .dark-mode .text-gray-800, .dark-mode .text-gray-600 { color: #e0e0e0 !important; }
-        .dark-mode input, .dark-mode textarea { background-color: #2d2d2d !important; color: white; border: 1px solid #444; }
-        .dark-mode .category-pill { background-color: #2d2d2d !important; color: #D4AF37 !important; }
-        .dark-mode .bg-gray-50 { background-color: #2d2d2d !important; }
-        
-        body { font-family: 'Poppins', sans-serif; background-color: #fcfcfc; scroll-behavior: smooth; transition: background 0.3s; padding-bottom: 100px; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        body { font-family: 'Poppins', sans-serif; background-color: #fcfcfc; scroll-behavior: smooth; padding-bottom: 120px; }
         .gold-gradient { background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%); }
-        .food-card { transition: all 0.4s; border: 1px solid rgba(212, 175, 55, 0.1); overflow: hidden; }
-        .marquee-container { background: #D4AF37; color: white; overflow: hidden; white-space: nowrap; padding: 6px 0; font-size: 12px; font-weight: bold; }
-        .marquee-text { display: inline-block; animation: marquee 25s linear infinite; }
-        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        #cart-bar { transition: transform 0.3s ease-in-out; transform: translateY(100%); }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        .modal.active { display: flex; }
+        #cart-bar { transition: transform 0.3s ease-in-out; transform: translateY(100%); position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 3px solid #D4AF37; padding: 16px; z-index: 50; box-shadow: 0 -10px 25px rgba(0,0,0,0.1); }
         #cart-bar.active { transform: translateY(0); }
+        .food-card { border: 1px solid #f0f0f0; transition: 0.3s; }
     </style>
 </head>
-<body id="body">
+<body>
 
-    <div class="marquee-container">
-        <div class="marquee-text">
-            ⚡ FREE DELIVERY on orders above ₹200!      🔥 Sunday Special: Extra 10% OFF      📍 Serving 15+ Villages!
-        </div>
-    </div>
-
-    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gold">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm p-4 border-b border-gold">
+        <div class="container mx-auto flex justify-between items-center">
             <div class="flex flex-col">
-                <span class="text-2xl font-bold tracking-tighter leading-none">GENZ <span class="text-[#D4AF37]">FOOD</span></span>
-                <span class="text-[10px] uppercase tracking-[0.2em] text-gray-400">Premium Delivery</span>
+                <span class="text-2xl font-bold leading-none">GENZ <span class="text-[#D4AF37]">FOOD</span></span>
+                <span class="text-[10px] tracking-widest text-gray-400 font-bold uppercase">Village Delivery</span>
             </div>
-            <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800">
-                <span id="theme-icon">🌙</span>
-            </button>
-        </div>
-        <div class="flex overflow-x-auto hide-scrollbar py-3 px-4 gap-3 bg-white border-t border-gray-50">
-            <a href="#hotel-harsh" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Hotel Harsh</a>
-            <a href="#woleeepa" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Woleeepa Cafe</a>
-            <a href="#fadke" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Fadke Thaali</a>
-            <a href="#vinod" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Hotel Vinod</a>
-            <a href="#red-dragon" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Red Dragon</a>
-            <a href="#aai-chinese" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">AAI Chinese</a>
-            <a href="#datta-bhel" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Datta Bhel</a>
+            <div class="text-right">
+                <span id="current-time-display" class="text-[10px] font-bold text-gray-400 block"></span>
+            </div>
         </div>
     </header>
 
-    <div class="px-4 py-4 sticky top-[105px] z-40">
-        <div class="relative max-w-md mx-auto">
-            <input type="text" id="searchInput" onkeyup="filterMenu()" placeholder="Search dishes..." class="w-full pl-4 pr-4 py-3 bg-white border border-gray-200 rounded-2xl shadow-sm text-sm outline-none shadow-md">
-        </div>
-    </div>
-
     <main class="container mx-auto px-4 py-8">
-        <div id="menu-container"></div>
+        <div id="menu-container" class="space-y-12"></div>
 
-        <div id="cart-bar" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gold p-4 z-50 shadow-2xl flex justify-between items-center">
-            <div>
-                <p id="cart-count" class="text-xs font-bold text-gray-400">0 ITEMS</p>
-                <p id="cart-total" class="text-xl font-bold text-[#D4AF37]">₹0</p>
+        <div id="billModal" class="modal">
+            <div class="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl relative">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 tracking-tighter">GENZ FOOD</h2>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-widest border-b border-dashed border-gray-200 pb-2">Digital Receipt</p>
+                </div>
+                <div id="billItems" class="space-y-3 mb-6 max-h-64 overflow-y-auto pr-2">
+                    </div>
+                <div class="flex justify-between items-center mb-8 pt-4 border-t border-dashed border-gray-200">
+                    <span class="font-bold text-gray-500">Total Payable:</span>
+                    <span id="billTotal" class="text-2xl font-black text-[#B8860B]">₹0</span>
+                </div>
+                <button onclick="confirmAndSend()" class="w-full gold-gradient text-white font-bold py-4 rounded-2xl shadow-lg mb-3">Order via WhatsApp ➔</button>
+                <button onclick="closeBill()" class="w-full text-gray-400 text-xs font-bold uppercase tracking-widest">Back to Menu</button>
             </div>
-            <button onclick="sendOrder()" class="gold-gradient text-white px-8 py-3 rounded-xl font-bold">Checkout Order ➔</button>
         </div>
 
-        <section class="mt-20 mb-12">
-            <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl shadow-sm border border-[#D4AF37]/20">
-                <h3 class="text-2xl font-bold mb-8 text-center">Customer Reviews 🥰</h3>
-                <form id="feedbackForm" class="space-y-4 mb-10">
-                    <input type="text" id="fbName" placeholder="Aapka Naam" required class="w-full px-4 py-3 rounded-xl bg-gray-50 border-none outline-none">
-                    <textarea id="fbText" placeholder="Review likhein..." rows="3" required class="w-full px-4 py-3 rounded-xl bg-gray-50 border-none outline-none"></textarea>
-                    <button type="submit" class="w-full gold-gradient text-white font-bold py-4 rounded-xl">Post Review</button>
-                </form>
-                <div id="reviewsContainer" class="space-y-4"></div>
+        <div id="cart-bar" class="flex justify-between items-center">
+            <div>
+                <p id="cart-count" class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">0 Items</p>
+                <p id="cart-total" class="text-2xl font-black text-[#D4AF37]">₹0</p>
             </div>
-        </section>
+            <button onclick="showBill()" class="gold-gradient text-white px-8 py-4 rounded-2xl font-bold shadow-lg">Checkout 🧾</button>
+        </div>
 
         <script>
             const WHATSAPP_NUMBER = "917385009275"; 
             let cart = {};
 
             const menuData = [
-                { id: "hotel-harsh", name: "Hotel Harsh", open: 11, close: 23.5, items: [{ name: "Chicken Dry Fry", price: 160 }, { name: "Egg Bhurji", price: 50 }, { name: "Chicken Kabab", price: 100 }, { name: "Special Chicken Curry", price: 120 }, { name: "Chicken Dum Biryani", price: 140 }, { name: "Chicken Thali", price: 150 }] },
-                { id: "woleeepa", name: "Woleeepa Cafe", open: 14, close: 22, items: [{ name: "Special Masala Chai", price: 20 }, { name: "Cold Coffee", price: 60 }, { name: "Chicken Sandwich", price: 80 }, { name: "Chicken Burger", price: 80 }] },
-                { id: "fadke", name: "Hotel FADKE THAALI", open: 11, close: 22, items: [{ name: "Veg Manchurian Dry", price: 80 }, { name: "Paneer 65", price: 120 }, { name: "Dal Tadka", price: 80 }, { name: "Special Veg Thali", price: 150 }] },
-                { id: "vinod", name: "Hotel Vinod", open: 11, close: 23.5, items: [{ name: "Cold Coffee with Ice Cream", price: 80 }, { name: "Masala Fries", price: 60 }, { name: "Chicken Curry", price: 130 }, { name: "Chicken Dum Biryani", price: 150 }, { name: "Chicken Thali", price: 160 }] },
-                { id: "red-dragon", name: "Red Dragon", open: 12, close: 22, items: [{ name: "Veg Hakka Noodles", price: 100 }, { name: "Chicken Noodles", price: 150 }, { name: "Chicken Fried Rice", price: 100 }, { name: "Chicken Lollipop", price: 150 }] },
-                { id: "aai-chinese", name: "AAI Chinese", open: 12, close: 22, items: [{ name: "Veg Steamed Momos", price: 60 }, { name: "Chicken Fried Momos", price: 100 }, { name: "Dragon Chicken", price: 150 }, { name: "Chicken Drumsticks", price: 160 }] },
-                { id: "datta-bhel", name: "Datta Bhel", open: 15, close: 21, items: [{ name: "Classic Pani Puri", price: 30 }, { name: "Sukha Puri", price: 30 }, { name: "Dahi Puri", price: 50 }, { name: "Classic Bhel Puri", price: 40 }] }
+                { id: "hotel-harsh", name: "Hotel Harsh", open: 11, close: 23.5, items: [
+                    { name: "Chicken Dry Fry", price: 160 }, { name: "Egg Bhurji", price: 50 }, { name: "Chicken Kabab", price: 100 }, 
+                    { name: "Special Chicken Curry", price: 120 }, { name: "Chicken Dum Biryani", price: 140 }, { name: "Chicken Thali", price: 150 }
+                ]},
+                { id: "woleeepa", name: "Woleeepa Cafe", open: 14, close: 22, items: [
+                    { name: "Special Masala Chai", price: 20 }, { name: "Cold Coffee", price: 60 }, { name: "Chicken Sandwich", price: 80 }, { name: "Chicken Burger", price: 80 }
+                ]},
+                { id: "fadke", name: "Hotel FADKE THAALI", open: 11, close: 22, items: [
+                    { name: "Veg Manchurian Dry", price: 80 }, { name: "Paneer 65", price: 120 }, { name: "Dal Tadka", price: 80 }, { name: "Special Veg Thali", price: 150 }
+                ]},
+                { id: "vinod", name: "Hotel Vinod", open: 11, close: 23.5, items: [
+                    { name: "Cold Coffee with Ice Cream", price: 80 }, { name: "Masala Fries", price: 60 }, { name: "Chicken Curry", price: 130 }, 
+                    { name: "Chicken Dum Biryani", price: 150 }, { name: "Chicken Thali", price: 160 }
+                ]},
+                { id: "red-dragon", name: "Red Dragon", open: 12, close: 22, items: [
+                    { name: "Veg Hakka Noodles", price: 100 }, { name: "Chicken Noodles", price: 150 }, { name: "Chicken Fried Rice", price: 100 }, { name: "Chicken Lollipop", price: 150 }
+                ]},
+                { id: "aai-chinese", name: "AAI Chinese", open: 12, close: 22, items: [
+                    { name: "Veg Steamed Momos", price: 60 }, { name: "Chicken Fried Momos", price: 100 }, { name: "Dragon Chicken", price: 150 }, { name: "Chicken Drumsticks", price: 160 }
+                ]},
+                { id: "datta-bhel", name: "Datta Bhel", open: 15, close: 21, items: [
+                    { name: "Classic Pani Puri", price: 30 }, { name: "Sukha Puri", price: 30 }, { name: "Dahi Puri", price: 50 }, { name: "Classic Bhel Puri", price: 40 }
+                ]}
             ];
 
             function isHotelOpen(open, close) {
@@ -111,27 +99,25 @@
                 container.innerHTML = "";
                 menuData.forEach(hotel => {
                     const open = isHotelOpen(hotel.open, hotel.close);
-                    let section = `<section id="${hotel.id}" class="mb-16">
-                        <div class="flex justify-between items-end mb-6">
-                            <h2 class="text-3xl font-bold border-l-4 border-gold pl-4">${hotel.name}</h2>
-                            <span class="text-sm font-bold ${open ? 'text-green-500' : 'text-red-500'}">${open ? 'OPEN' : 'CLOSED'}</span>
+                    let section = `<section id="${hotel.id}">
+                        <div class="flex justify-between items-baseline mb-4 border-b border-gray-100 pb-2">
+                            <h2 class="text-xl font-black text-gray-800 uppercase tracking-tight">${hotel.name}</h2>
+                            <span class="text-[9px] font-bold px-2 py-0.5 rounded-full ${open ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}">${open ? 'OPEN' : 'CLOSED'}</span>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">`;
+                        <div class="grid grid-cols-1 gap-3">`;
+                    
                     hotel.items.forEach(item => {
-                        const imgName = item.name.toLowerCase().replace(/ /g, '-').replace(/[()]/g, '');
-                        const imgSrc = `images/${hotel.id}/${imgName}.jpg`;
                         const safeID = item.name.replace(/\s+/g, '');
                         section += `
-                            <div class="food-card bg-white rounded-2xl shadow-sm flex flex-col ${!open ? 'opacity-50' : ''}">
-                                <img src="${imgSrc}" onerror="this.src='images/common-placeholder.jpg'" class="h-44 w-full object-cover">
-                                <div class="p-4 flex flex-col flex-grow">
-                                    <h4 class="font-bold text-gray-800 text-lg leading-tight">${item.name}</h4>
-                                    <p class="text-gold font-bold text-xl mb-4">₹${item.price}</p>
-                                    <div class="flex items-center justify-between mt-auto bg-gray-50 rounded-xl p-2">
-                                        <button onclick="${open ? `changeQty('${item.name}', -1, ${item.price}, '${hotel.name}')` : ''}" class="w-10 h-10 bg-white rounded-lg shadow-sm font-bold text-red-500">-</button>
-                                        <span id="qty-${safeID}" class="font-bold text-lg">0</span>
-                                        <button onclick="${open ? `changeQty('${item.name}', 1, ${item.price}, '${hotel.name}')` : ''}" class="w-10 h-10 bg-white rounded-lg shadow-sm font-bold text-green-500">+</button>
-                                    </div>
+                            <div class="bg-white p-4 rounded-2xl flex justify-between items-center food-card ${!open ? 'opacity-40' : ''}">
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-sm">${item.name}</h4>
+                                    <p class="text-[#B8860B] font-bold text-sm">₹${item.price}</p>
+                                </div>
+                                <div class="flex items-center gap-3 bg-gray-50 p-1 rounded-xl">
+                                    <button onclick="${open ? `changeQty('${item.name}', -1, ${item.price}, '${hotel.name}')` : ''}" class="w-8 h-8 bg-white rounded-lg shadow-sm text-red-500 font-bold">-</button>
+                                    <span id="qty-${safeID}" class="font-bold text-sm min-w-[15px] text-center">0</span>
+                                    <button onclick="${open ? `changeQty('${item.name}', 1, ${item.price}, '${hotel.name}')` : ''}" class="w-8 h-8 bg-white rounded-lg shadow-sm text-green-500 font-bold">+</button>
                                 </div>
                             </div>`;
                     });
@@ -152,66 +138,48 @@
             function updateCart() {
                 let total = 0, count = 0;
                 for(let key in cart) { total += cart[key].price * cart[key].qty; count += cart[key].qty; }
-                document.getElementById('cart-count').innerText = `${count} ITEMS`;
+                document.getElementById('cart-count').innerText = `${count} ITEMS SELECTED`;
                 document.getElementById('cart-total').innerText = `₹${total}`;
                 document.getElementById('cart-bar').classList.toggle('active', count > 0);
             }
 
-            function sendOrder() {
-                let msg = "New Order from GENZ FOOD:%0A---------------------------%0A";
+            function showBill() {
+                const billItems = document.getElementById('billItems');
+                let total = 0;
+                billItems.innerHTML = "";
+                for(let key in cart) {
+                    const itemTotal = cart[key].price * cart[key].qty;
+                    total += itemTotal;
+                    billItems.innerHTML += `
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-gray-500">${cart[key].qty} x ${key}</span>
+                            <span class="font-bold text-gray-800">₹${itemTotal}</span>
+                        </div>`;
+                }
+                document.getElementById('billTotal').innerText = `₹${total}`;
+                document.getElementById('billModal').classList.add('active');
+            }
+
+            function closeBill() { document.getElementById('billModal').classList.remove('active'); }
+
+            function confirmAndSend() {
+                let msg = "GENZ FOOD - NEW ORDER 🧾%0A---------------------------%0A";
                 let total = 0;
                 for(let key in cart) {
                     msg += `✅ ${cart[key].qty}x ${key} (${cart[key].hotel}) - ₹${cart[key].price * cart[key].qty}%0A`;
                     total += cart[key].price * cart[key].qty;
                 }
-                msg += `---------------------------%0A💰 *Total: ₹${total}*`;
-                if(confirm("Share Live Location?")) {
-                    navigator.geolocation.getCurrentPosition(p => {
-                        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}%0A📍 Location: http://google.com/maps?q=${p.coords.latitude},${p.coords.longitude}`);
-                    }, () => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`));
-                } else {
-                    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`);
-                }
-            }
-
-            function toggleDarkMode() {
-                document.getElementById('body').classList.toggle('dark-mode');
-            }
-
-            // Reviews Logic
-            const feedbackForm = document.getElementById('feedbackForm');
-            const reviewsContainer = document.getElementById('reviewsContainer');
-            feedbackForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const name = document.getElementById('fbName').value;
-                const text = document.getElementById('fbText').value;
-                const newReview = { id: Date.now(), name, text };
-                const reviews = JSON.parse(localStorage.getItem('genzFoodReviews')) || [];
-                reviews.push(newReview);
-                localStorage.setItem('genzFoodReviews', JSON.stringify(reviews));
-                renderReview(newReview);
-                this.reset();
-            });
-            function renderReview(rev) {
-                const html = `<div class="bg-gray-50 p-4 rounded-2xl border-l-4 border-gold" onclick="if(event.detail===3){if(confirm('Delete?')){let r=JSON.parse(localStorage.getItem('genzFoodReviews')).filter(x=>x.id!==${rev.id});localStorage.setItem('genzFoodReviews',JSON.stringify(r));location.reload();}}">
-                    <p class="font-bold text-sm text-gray-800">${rev.name}</p>
-                    <p class="text-gray-600 text-sm italic mt-1">"${rev.text}"</p>
-                </div>`;
-                reviewsContainer.insertAdjacentHTML('afterbegin', html);
-            }
-
-            function filterMenu() {
-                const input = document.getElementById('searchInput').value.toLowerCase();
-                document.querySelectorAll('.food-card').forEach(card => {
-                    const title = card.querySelector('h4').innerText.toLowerCase();
-                    card.style.display = title.includes(input) ? "flex" : "none";
-                });
+                msg += `---------------------------%0A💰 *TOTAL BILL: ₹${total}*`;
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`);
+                closeBill();
             }
 
             window.onload = () => {
                 renderMenu();
-                const reviews = JSON.parse(localStorage.getItem('genzFoodReviews')) || [];
-                reviews.forEach(renderReview);
+                setInterval(() => {
+                    const now = new Date();
+                    document.getElementById('current-time-display').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                }, 1000);
             };
         </script>
     </main>
