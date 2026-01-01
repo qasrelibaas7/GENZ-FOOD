@@ -26,14 +26,13 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         #cart-bar { transition: transform 0.3s ease-in-out; transform: translateY(100%); }
         #cart-bar.active { transform: translateY(0); }
-        .comment-box { cursor: pointer; user-select: none; }
     </style>
 </head>
 <body id="body">
 
     <div class="marquee-container">
         <div class="marquee-text">
-            ⚡ FREE DELIVERY on orders above ₹200! &nbsp;&nbsp;&nbsp;&nbsp; 🔥 Sunday Special: Extra 10% OFF &nbsp;&nbsp;&nbsp;&nbsp; 📍 Serving 15+ Villages!
+            ⚡ FREE DELIVERY on orders above ₹200!      🔥 Sunday Special: Extra 10% OFF      📍 Serving 15+ Villages!
         </div>
     </div>
 
@@ -77,15 +76,12 @@
 
         <section class="mt-20 mb-12">
             <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl shadow-sm border border-[#D4AF37]/20">
-                <h3 class="text-2xl font-bold mb-2 text-center">Customer Reviews 🥰</h3>
-                <p class="text-gray-400 text-sm text-center mb-8">Post a review and let us know!</p>
-                
+                <h3 class="text-2xl font-bold mb-8 text-center">Customer Reviews 🥰</h3>
                 <form id="feedbackForm" class="space-y-4 mb-10">
                     <input type="text" id="fbName" placeholder="Aapka Naam" required class="w-full px-4 py-3 rounded-xl bg-gray-50 border-none outline-none">
                     <textarea id="fbText" placeholder="Review likhein..." rows="3" required class="w-full px-4 py-3 rounded-xl bg-gray-50 border-none outline-none"></textarea>
-                    <button type="submit" class="w-full gold-gradient text-white font-bold py-4 rounded-xl shadow-lg">Post Review</button>
+                    <button type="submit" class="w-full gold-gradient text-white font-bold py-4 rounded-xl">Post Review</button>
                 </form>
-
                 <div id="reviewsContainer" class="space-y-4"></div>
             </div>
         </section>
@@ -95,33 +91,46 @@
             let cart = {};
 
             const menuData = [
-                { id: "hotel-harsh", name: "Hotel Harsh", items: [{ name: "Chicken Dry Fry", price: 160 }, { name: "Egg Bhurji", price: 50 }, { name: "Chicken Kabab", price: 100 }, { name: "Special Chicken Curry", price: 120 }, { name: "Chicken Masala", price: 130 }, { name: "Mutton Curry", price: 180 }, { name: "Egg Curry", price: 80 }, { name: "Chicken Dum Biryani", price: 140 }, { name: "Kuska (Rice)", price: 70 }, { name: "Egg Biryani", price: 100 }, { name: "Plain Rice", price: 40 }, { name: "Butter Roti", price: 20 }, { name: "Chicken Thali", price: 150 }, { name: "Egg Thali", price: 100 }] },
-                { id: "woleeepa", name: "Woleeepa Cafe", items: [{ name: "Special Masala Chai", price: 20 }, { name: "Cold Coffee", price: 60 }, { name: "Lemon Iced Tea", price: 50 }, { name: "Chicken Sandwich", price: 80 }, { name: "Chicken Nuggets", price: 90 }, { name: "Egg Cheese Burger", price: 70 }, { name: "Chicken Popcorn", price: 100 }, { name: "Veg Cheese Sandwich", price: 60 }, { name: "Crispy French Fries", price: 50 }, { name: "Veg Paneer Burger", price: 80 }, { name: "Classic Maggi", price: 40 }, { name: "Egg Maggi", price: 60 }, { name: "Garlic Bread", price: 50 }, { name: "Bun Maska", price: 30 }] },
-                { id: "fadke", name: "Hotel FADKE THAALI", items: [{ name: "Veg Manchurian Dry", price: 80 }, { name: "Paneer 65", price: 120 }, { name: "Kadhai Paneer", price: 150 }, { name: "Mix Veg Curry", price: 100 }, { name: "Dal Tadka", price: 80 }, { name: "Dal Makhani", price: 110 }, { name: "Chole Masala", price: 90 }, { name: "Veg Hyderabadi Biryani", price: 120 }, { name: "Jeera Rice", price: 60 }, { name: "Veg Pulao", price: 90 }, { name: "Special Veg Thali", price: 150 }] },
-                { id: "vinod", name: "Hotel Vinod", items: [{ name: "Cold Coffee with Ice Cream", price: 80 }, { name: "Masala Fries", price: 60 }, { name: "Chicken Grilled Sandwich", price: 90 }, { name: "Veg Cheese Burger", price: 80 }, { name: "Paneer Butter Masala", price: 140 }, { name: "Dal Tadka", price: 80 }, { name: "Chicken Curry", price: 130 }, { name: "Butter Chicken", price: 160 }, { name: "Chicken Dum Biryani", price: 150 }, { name: "Chicken Thali", price: 160 }] },
-                { id: "red-dragon", name: "Red Dragon", items: [{ name: "Veg Hakka Noodles", price: 100 }, { name: "Egg Chowmein", price: 120 }, { name: "Chicken Noodles", price: 150 }, { name: "Schezwan Noodles", price: 80 }, { name: "Veg Fried Rice", price: 70 }, { name: "Chicken Fried Rice", price: 100 }, { name: "Triple Schezwan Rice", price: 150 }] },
-                { id: "aai-chinese", name: "AAI Chinese", items: [{ name: "Veg Steamed Momos", price: 60 }, { name: "Chicken Fried Momos", price: 100 }, { name: "Kurkure Paneer Momos", price: 120 }, { name: "Tandoori Chicken Momos", price: 140 }, { name: "Dragon Chicken", price: 150 }, { name: "Chicken Drumsticks", price: 160 }] },
-                { id: "datta-bhel", name: "Datta Bhel", items: [{ name: "Classic Pani Puri", price: 30 }, { name: "Sukha Puri", price: 30 }, { name: "Masala Puri", price: 40 }, { name: "Dahi Puri", price: 50 }, { name: "Sev Puri", price: 40 }, { name: "Classic Bhel Puri", price: 40 }] }
+                { id: "hotel-harsh", name: "Hotel Harsh", open: 11, close: 23.5, items: [{ name: "Chicken Dry Fry", price: 160 }, { name: "Egg Bhurji", price: 50 }, { name: "Chicken Kabab", price: 100 }, { name: "Special Chicken Curry", price: 120 }, { name: "Chicken Dum Biryani", price: 140 }, { name: "Chicken Thali", price: 150 }] },
+                { id: "woleeepa", name: "Woleeepa Cafe", open: 14, close: 22, items: [{ name: "Special Masala Chai", price: 20 }, { name: "Cold Coffee", price: 60 }, { name: "Chicken Sandwich", price: 80 }, { name: "Chicken Burger", price: 80 }] },
+                { id: "fadke", name: "Hotel FADKE THAALI", open: 11, close: 22, items: [{ name: "Veg Manchurian Dry", price: 80 }, { name: "Paneer 65", price: 120 }, { name: "Dal Tadka", price: 80 }, { name: "Special Veg Thali", price: 150 }] },
+                { id: "vinod", name: "Hotel Vinod", open: 11, close: 23.5, items: [{ name: "Cold Coffee with Ice Cream", price: 80 }, { name: "Masala Fries", price: 60 }, { name: "Chicken Curry", price: 130 }, { name: "Chicken Dum Biryani", price: 150 }, { name: "Chicken Thali", price: 160 }] },
+                { id: "red-dragon", name: "Red Dragon", open: 12, close: 22, items: [{ name: "Veg Hakka Noodles", price: 100 }, { name: "Chicken Noodles", price: 150 }, { name: "Chicken Fried Rice", price: 100 }, { name: "Chicken Lollipop", price: 150 }] },
+                { id: "aai-chinese", name: "AAI Chinese", open: 12, close: 22, items: [{ name: "Veg Steamed Momos", price: 60 }, { name: "Chicken Fried Momos", price: 100 }, { name: "Dragon Chicken", price: 150 }, { name: "Chicken Drumsticks", price: 160 }] },
+                { id: "datta-bhel", name: "Datta Bhel", open: 15, close: 21, items: [{ name: "Classic Pani Puri", price: 30 }, { name: "Sukha Puri", price: 30 }, { name: "Dahi Puri", price: 50 }, { name: "Classic Bhel Puri", price: 40 }] }
             ];
+
+            function isHotelOpen(open, close) {
+                const now = new Date();
+                const current = now.getHours() + (now.getMinutes() / 60);
+                return current >= open && current < close;
+            }
 
             function renderMenu() {
                 const container = document.getElementById('menu-container');
+                container.innerHTML = "";
                 menuData.forEach(hotel => {
-                    let section = `<section id="${hotel.id}" class="mb-16"><h2 class="text-3xl font-bold border-l-4 border-gold pl-4 mb-8">${hotel.name}</h2><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">`;
+                    const open = isHotelOpen(hotel.open, hotel.close);
+                    let section = `<section id="${hotel.id}" class="mb-16">
+                        <div class="flex justify-between items-end mb-6">
+                            <h2 class="text-3xl font-bold border-l-4 border-gold pl-4">${hotel.name}</h2>
+                            <span class="text-sm font-bold ${open ? 'text-green-500' : 'text-red-500'}">${open ? 'OPEN' : 'CLOSED'}</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">`;
                     hotel.items.forEach(item => {
                         const imgName = item.name.toLowerCase().replace(/ /g, '-').replace(/[()]/g, '');
                         const imgSrc = `images/${hotel.id}/${imgName}.jpg`;
                         const safeID = item.name.replace(/\s+/g, '');
                         section += `
-                            <div class="food-card bg-white rounded-2xl shadow-sm flex flex-col">
+                            <div class="food-card bg-white rounded-2xl shadow-sm flex flex-col ${!open ? 'opacity-50' : ''}">
                                 <img src="${imgSrc}" onerror="this.src='images/common-placeholder.jpg'" class="h-44 w-full object-cover">
                                 <div class="p-4 flex flex-col flex-grow">
                                     <h4 class="font-bold text-gray-800 text-lg leading-tight">${item.name}</h4>
-                                    <p class="text-[#B8860B] font-bold text-xl mb-4">₹${item.price}</p>
+                                    <p class="text-gold font-bold text-xl mb-4">₹${item.price}</p>
                                     <div class="flex items-center justify-between mt-auto bg-gray-50 rounded-xl p-2">
-                                        <button onclick="changeQty('${item.name}', -1, ${item.price}, '${hotel.name}')" class="w-10 h-10 bg-white rounded-lg shadow-sm font-bold text-red-500">-</button>
+                                        <button onclick="${open ? `changeQty('${item.name}', -1, ${item.price}, '${hotel.name}')` : ''}" class="w-10 h-10 bg-white rounded-lg shadow-sm font-bold text-red-500">-</button>
                                         <span id="qty-${safeID}" class="font-bold text-lg">0</span>
-                                        <button onclick="changeQty('${item.name}', 1, ${item.price}, '${hotel.name}')" class="w-10 h-10 bg-white rounded-lg shadow-sm font-bold text-green-500">+</button>
+                                        <button onclick="${open ? `changeQty('${item.name}', 1, ${item.price}, '${hotel.name}')` : ''}" class="w-10 h-10 bg-white rounded-lg shadow-sm font-bold text-green-500">+</button>
                                     </div>
                                 </div>
                             </div>`;
@@ -133,10 +142,7 @@
             function changeQty(name, delta, price, hotel) {
                 if(!cart[name]) cart[name] = { price, qty: 0, hotel };
                 cart[name].qty += delta;
-                if(cart[name].qty <= 0) {
-                    cart[name].qty = 0;
-                    delete cart[name];
-                }
+                if(cart[name].qty <= 0) { cart[name].qty = 0; delete cart[name]; }
                 const safeID = name.replace(/\s+/g, '');
                 const el = document.getElementById(`qty-${safeID}`);
                 if(el) el.innerText = cart[name] ? cart[name].qty : 0;
@@ -145,10 +151,7 @@
 
             function updateCart() {
                 let total = 0, count = 0;
-                for(let key in cart) {
-                    total += cart[key].price * cart[key].qty;
-                    count += cart[key].qty;
-                }
+                for(let key in cart) { total += cart[key].price * cart[key].qty; count += cart[key].qty; }
                 document.getElementById('cart-count').innerText = `${count} ITEMS`;
                 document.getElementById('cart-total').innerText = `₹${total}`;
                 document.getElementById('cart-bar').classList.toggle('active', count > 0);
@@ -161,22 +164,23 @@
                     msg += `✅ ${cart[key].qty}x ${key} (${cart[key].hotel}) - ₹${cart[key].price * cart[key].qty}%0A`;
                     total += cart[key].price * cart[key].qty;
                 }
-                msg += `---------------------------%0A💰 *Total Bill: ₹${total}*`;
-                
-                if(confirm("Share your Live Location for fast delivery?")) {
+                msg += `---------------------------%0A💰 *Total: ₹${total}*`;
+                if(confirm("Share Live Location?")) {
                     navigator.geolocation.getCurrentPosition(p => {
-                        const loc = `https://www.google.com/maps?q=${p.coords.latitude},${p.coords.longitude}`;
-                        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}%0A📍 Location: ${loc}`, '_blank');
-                    }, () => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank'));
+                        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}%0A📍 Location: http://google.com/maps?q=${p.coords.latitude},${p.coords.longitude}`);
+                    }, () => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`));
                 } else {
-                    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+                    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`);
                 }
+            }
+
+            function toggleDarkMode() {
+                document.getElementById('body').classList.toggle('dark-mode');
             }
 
             // Reviews Logic
             const feedbackForm = document.getElementById('feedbackForm');
             const reviewsContainer = document.getElementById('reviewsContainer');
-
             feedbackForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const name = document.getElementById('fbName').value;
@@ -188,33 +192,12 @@
                 renderReview(newReview);
                 this.reset();
             });
-
             function renderReview(rev) {
-                const html = `
-                    <div class="bg-gray-50 p-4 rounded-2xl border-l-4 border-gold comment-box" 
-                         onclick="handleTripleClick(event, ${rev.id})">
-                        <p class="font-bold text-sm text-gray-800">${rev.name}</p>
-                        <p class="text-gray-600 text-sm italic mt-1">"${rev.text}"</p>
-                        <span class="text-[9px] text-gray-400 uppercase mt-2 block">Verified Customer</span>
-                    </div>`;
+                const html = `<div class="bg-gray-50 p-4 rounded-2xl border-l-4 border-gold" onclick="if(event.detail===3){if(confirm('Delete?')){let r=JSON.parse(localStorage.getItem('genzFoodReviews')).filter(x=>x.id!==${rev.id});localStorage.setItem('genzFoodReviews',JSON.stringify(r));location.reload();}}">
+                    <p class="font-bold text-sm text-gray-800">${rev.name}</p>
+                    <p class="text-gray-600 text-sm italic mt-1">"${rev.text}"</p>
+                </div>`;
                 reviewsContainer.insertAdjacentHTML('afterbegin', html);
-            }
-
-            function handleTripleClick(e, id) {
-                if(e.detail === 3) {
-                    if(confirm("Delete this review?")) {
-                        let reviews = JSON.parse(localStorage.getItem('genzFoodReviews')) || [];
-                        reviews = reviews.filter(r => r.id !== id);
-                        localStorage.setItem('genzFoodReviews', JSON.stringify(reviews));
-                        location.reload();
-                    }
-                }
-            }
-
-            function toggleDarkMode() {
-                document.getElementById('body').classList.toggle('dark-mode');
-                const isDark = document.getElementById('body').classList.contains('dark-mode');
-                document.getElementById('theme-icon').innerText = isDark ? '☀️' : '🌙';
             }
 
             function filterMenu() {
