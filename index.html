@@ -8,7 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #D4AF37; --light-gold: #fcf8e8; }
-        body { font-family: 'Poppins', sans-serif; background-color: #fcfcfc; scroll-behavior: smooth; }
+        
+        /* Dark Mode Styles */
+        body.dark-mode { background-color: #121212; color: #ffffff; }
+        .dark-mode header, .dark-mode .bg-white, .dark-mode footer { background-color: #1e1e1e !important; color: white; border-color: #333 !important; }
+        .dark-mode .food-card { background-color: #252525 !important; border-color: #333; }
+        .dark-mode .text-gray-800, .dark-mode .text-gray-600 { color: #e0e0e0 !important; }
+        .dark-mode input, .dark-mode textarea { background-color: #2d2d2d !important; color: white; border: 1px solid #444; }
+        .dark-mode .category-pill { background-color: #2d2d2d !important; color: #D4AF37 !important; }
+        .dark-mode .bg-gray-50 { background-color: #2d2d2d !important; }
+
+        body { font-family: 'Poppins', sans-serif; background-color: #fcfcfc; scroll-behavior: smooth; transition: background 0.3s; }
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
         .gold-gradient { background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%); }
         .food-card { 
@@ -20,20 +30,25 @@
             box-shadow: 0 15px 30px rgba(212, 175, 55, 0.15);
             border-color: var(--gold);
         }
-        .whatsapp-btn {
-            background-color: #25D366;
-            transition: 0.3s;
-        }
+        .whatsapp-btn { background-color: #25D366; transition: 0.3s; }
         .whatsapp-btn:hover { background-color: #128C7E; transform: scale(1.05); }
-        .category-pill {
-            scroll-snap-align: start;
-            flex-shrink: 0;
-        }
+        
+        /* Scrolling Banner */
+        .marquee-container { background: #D4AF37; color: white; overflow: hidden; white-space: nowrap; padding: 6px 0; font-size: 12px; font-weight: bold; }
+        .marquee-text { display: inline-block; animation: marquee 20s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .comment-box { cursor: pointer; user-select: none; }
     </style>
 </head>
-<body>
+<body id="body">
+
+    <div class="marquee-container">
+        <div class="marquee-text">
+            ⚡ FREE DELIVERY on orders above ₹200! &nbsp;&nbsp;&nbsp;&nbsp; 🔥 Sunday Special: Extra 10% OFF on Hotel Harsh &nbsp;&nbsp;&nbsp;&nbsp; 🥤 Get a free drink with AAi Chinese Combos! &nbsp;&nbsp;&nbsp;&nbsp; 📍 Serving 15+ Villages across the region!
+        </div>
+    </div>
 
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gold">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -41,10 +56,12 @@
                 <span class="text-2xl font-bold tracking-tighter leading-none">GENZ <span class="text-[#D4AF37]">FOOD</span></span>
                 <span class="text-[10px] uppercase tracking-[0.2em] text-gray-400">Premium Delivery</span>
             </div>
-            <div class="text-sm font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                Village Special 📍
-            </div>
+            
+            <button onclick="toggleDarkMode()" id="theme-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 transition-all">
+                <span id="theme-icon">🌙</span>
+            </button>
         </div>
+        
         <div class="flex overflow-x-auto hide-scrollbar py-3 px-4 gap-3 bg-white border-t border-gray-50">
             <a href="#hotel-harsh" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Hotel Harsh</a>
             <a href="#woleeepa" class="category-pill px-4 py-1 rounded-full bg-[#fcf8e8] text-[#B8860B] text-xs font-bold border border-[#D4AF37]">Woleeepa Cafe</a>
@@ -56,7 +73,7 @@
         </div>
     </header>
 
-    <div class="px-4 py-4 bg-[#fcfcfc] sticky top-[105px] z-40 border-b border-gray-100">
+    <div class="px-4 py-4 sticky top-[105px] z-40 border-b border-gray-100 bg-transparent">
         <div class="relative max-w-md mx-auto">
             <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             <input type="text" id="searchInput" onkeyup="filterMenu()" 
@@ -83,247 +100,98 @@
                     </button>
                 </form>
 
-                <div id="reviewsContainer" class="space-y-4">
-                    </div>
+                <div id="reviewsContainer" class="space-y-4"></div>
             </div>
         </section>
 
         <script>
             // --- MENU DATA ---
             const menuData = [
-                {
-                    id: "hotel-harsh",
-                    name: "Hotel Harsh",
-                    items: [
-                        { name: "Chicken Dry Fry", price: "₹90 / ₹160" },
-                        { name: "Egg Bhurji", price: "₹50" },
-                        { name: "Chicken Kabab", price: "₹100" },
-                        { name: "Special Chicken Curry", price: "₹120" },
-                        { name: "Chicken Masala", price: "₹130" },
-                        { name: "Mutton Curry", price: "₹180" },
-                        { name: "Egg Curry", price: "₹80" },
-                        { name: "Chicken Dum Biryani", price: "₹140" },
-                        { name: "Kuska (Biryani Rice)", price: "₹70" },
-                        { name: "Egg Biryani", price: "₹100" },
-                        { name: "Plain Rice", price: "₹40" },
-                        { name: "Butter Roti", price: "₹20" },
-                        { name: "Chicken Thali", price: "₹150" },
-                        { name: "Egg Thali", price: "₹100" }
-                    ]
-                },
-                {
-                    id: "woleeepa",
-                    name: "Woleeepa Cafe",
-                    items: [
-                        { name: "Special Masala Chai", price: "₹20" },
-                        { name: "Cold Coffee", price: "₹60" },
-                        { name: "Lemon Iced Tea", price: "₹50" },
-                        { name: "Chicken Sandwich", price: "₹80" },
-                        { name: "Chicken Nuggets", price: "₹90" },
-                        { name: "Egg Cheese Burger", price: "₹70" },
-                        { name: "Chicken Popcorn", price: "₹100" },
-                        { name: "Veg Cheese Sandwich", price: "₹60" },
-                        { name: "Crispy French Fries", price: "₹50" },
-                        { name: "Veg Paneer Burger", price: "₹80" },
-                        { name: "Classic Maggi", price: "₹40" },
-                        { name: "Egg Maggi", price: "₹60" },
-                        { name: "Garlic Bread", price: "₹50" },
-                        { name: "Bun Maska", price: "₹30" }
-                    ]
-                },
-                {
-                    id: "fadke",
-                    name: "Hotel FADKE THAALI",
-                    items: [
-                        { name: "Veg Manchurian Dry", price: "₹80" },
-                        { name: "Paneer 65", price: "₹120" },
-                        { name: "Kadhai Paneer", price: "₹150" },
-                        { name: "Mix Veg Curry", price: "₹100" },
-                        { name: "Dal Tadka", price: "₹80" },
-                        { name: "Dal Makhani", price: "₹110" },
-                        { name: "Chole Masala", price: "₹90" },
-                        { name: "Veg Hyderabadi Biryani", price: "₹120" },
-                        { name: "Jeera Rice", price: "₹60" },
-                        { name: "Veg Pulao", price: "₹90" },
-                        { name: "Special Veg Thali", price: "₹150" },
-                        { name: "Mini Thali", price: "₹90" }
-                    ]
-                },
-                {
-                    id: "vinod",
-                    name: "Hotel Vinod",
-                    items: [
-                        { name: "Cold Coffee with Ice Cream", price: "₹80" },
-                        { name: "Masala Fries", price: "₹60" },
-                        { name: "Chicken Grilled Sandwich", price: "₹90" },
-                        { name: "Veg Cheese Burger", price: "₹80" },
-                        { name: "Paneer Butter Masala", price: "₹140" },
-                        { name: "Dal Tadka", price: "₹80" },
-                        { name: "Mix Veg Masala", price: "₹100" },
-                        { name: "Chicken Curry", price: "₹130" },
-                        { name: "Butter Chicken", price: "₹160" },
-                        { name: "Egg Masala", price: "₹90" },
-                        { name: "Chicken Dum Biryani", price: "₹150" },
-                        { name: "Executive Veg Thali", price: "₹120" },
-                        { name: "Chicken Thali", price: "₹160" }
-                    ]
-                },
-                {
-                    id: "red-dragon",
-                    name: "Red Dragon",
-                    items: [
-                        { name: "Veg Hakka Noodles", price: "₹60 / ₹100" },
-                        { name: "Egg Chowmein", price: "₹70 / ₹120" },
-                        { name: "Chicken Noodles", price: "₹90 / ₹150" },
-                        { name: "Schezwan Noodles", price: "₹80" },
-                        { name: "Veg Fried Rice", price: "₹70" },
-                        { name: "Chicken Fried Rice", price: "₹100" },
-                        { name: "Triple Schezwan Rice", price: "₹150" },
-                        { name: "Chicken Lollipop", price: "₹150" },
-                    ]
-                },
-                {
-                    id: "aai-chinese",
-                    name: "AAI Chinese",
-                    items: [
-                        { name: "Veg Steamed Momos", price: "₹60" },
-                        { name: "Chicken Fried Momos", price: "₹100" },
-                        { name: "Kurkure Paneer Momos", price: "₹120" },
-                        { name: "Tandoori Chicken Momos", price: "₹140" },
-                        { name: "Honey Chilli Potato", price: "₹80" },
-                        { name: "Dragon Chicken", price: "₹150" },
-                        { name: "Crispy Corn Pepper Salt", price: "₹100" },
-                        { name: "Chicken Drumsticks", price: "₹160" },
-                        { name: "Burnt Garlic Fried Rice", price: "₹90" },
-                    ]
-                },
-                {
-                    id: "datta-bhel",
-                    name: "Datta Bhel",
-                    items: [
-                        { name: "Classic Pani Puri", price: "₹30" },
-                        { name: "Chocolate Pani Puri", price: "₹60" },
-                        { name: "Sukha Puri", price: "₹30" },
-                        { name: "Masala Puri", price: "₹40" },
-                        { name: "Dahi Puri", price: "₹50" },
-                        { name: "Sev Puri", price: "₹40" },
-                        { name: "Classic Bhel Puri", price: "₹40" },
-                        { name: "Sukha Bhel", price: "₹35" },
-                        { name: "Corn Bhel", price: "₹50" },
-                    ]
-                }
+                { id: "hotel-harsh", name: "Hotel Harsh", items: [{ name: "Chicken Dry Fry", price: "90 / 160" }, { name: "Egg Bhurji", price: "50" }, { name: "Chicken Kabab", price: "100" }, { name: "Special Chicken Curry", price: "120" }, { name: "Chicken Masala", price: "130" }, { name: "Mutton Curry", price: "180" }, { name: "Egg Curry", price: "80" }, { name: "Chicken Dum Biryani", price: "140" }, { name: "Kuska (Rice)", price: "70" }, { name: "Egg Biryani", price: "100" }, { name: "Plain Rice", price: "40" }, { name: "Butter Roti", price: "20" }, { name: "Chicken Thali", price: "150" }, { name: "Egg Thali", price: "100" }] },
+                { id: "woleeepa", name: "Woleeepa Cafe", items: [{ name: "Special Masala Chai", price: "20" }, { name: "Cold Coffee", price: "60" }, { name: "Lemon Iced Tea", price: "50" }, { name: "Chicken Sandwich", price: "80" }, { name: "Chicken Nuggets", price: "90" }, { name: "Egg Cheese Burger", price: "70" }, { name: "Chicken Popcorn", price: "100" }, { name: "Veg Cheese Sandwich", price: "60" }, { name: "Crispy French Fries", price: "50" }, { name: "Veg Paneer Burger", price: "80" }, { name: "Classic Maggi", price: "40" }, { name: "Egg Maggi", price: "60" }, { name: "Garlic Bread", price: "50" }, { name: "Bun Maska", price: "30" }] },
+                { id: "fadke", name: "Hotel FADKE THAALI", items: [{ name: "Veg Manchurian Dry", price: "80" }, { name: "Paneer 65", price: "120" }, { name: "Kadhai Paneer", price: "150" }, { name: "Mix Veg Curry", price: "100" }, { name: "Dal Tadka", price: "80" }, { name: "Dal Makhani", price: "110" }, { name: "Chole Masala", price: "90" }, { name: "Veg Hyderabadi Biryani", price: "120" }, { name: "Jeera Rice", price: "60" }, { name: "Veg Pulao", price: "90" }, { name: "Special Veg Thali", price: "150" }, { name: "Mini Thali", price: "90" }] },
+                { id: "vinod", name: "Hotel Vinod", items: [{ name: "Cold Coffee with Ice Cream", price: "80" }, { name: "Masala Fries", price: "60" }, { name: "Chicken Grilled Sandwich", price: "90" }, { name: "Veg Cheese Burger", price: "80" }, { name: "Paneer Butter Masala", price: "140" }, { name: "Dal Tadka", price: "80" }, { name: "Mix Veg Masala", price: "100" }, { name: "Chicken Curry", price: "130" }, { name: "Butter Chicken", price: "160" }, { name: "Egg Masala", price: "90" }, { name: "Chicken Dum Biryani", price: "150" }, { name: "Executive Veg Thali", price: "120" }, { name: "Chicken Thali", price: "160" }] },
+                { id: "red-dragon", name: "Red Dragon", items: [{ name: "Veg Hakka Noodles", price: "60 / 100" }, { name: "Egg Chowmein", price: "70 / 120" }, { name: "Chicken Noodles", price: "90 / 150" }, { name: "Schezwan Noodles", price: "80" }, { name: "Veg Fried Rice", price: "70" }, { name: "Chicken Fried Rice", price: "100" }, { name: "Triple Schezwan Rice", price: "150" }, { name: "Chicken Lollipop", price: "150" }] },
+                { id: "aai-chinese", name: "AAI Chinese", items: [{ name: "Veg Steamed Momos", price: "60" }, { name: "Chicken Fried Momos", price: "100" }, { name: "Kurkure Paneer Momos", price: "120" }, { name: "Tandoori Chicken Momos", price: "140" }, { name: "Honey Chilli Potato", price: "80" }, { name: "Dragon Chicken", price: "150" }, { name: "Crispy Corn Pepper Salt", price: "100" }, { name: "Chicken Drumsticks", price: "160" }, { name: "Burnt Garlic Fried Rice", price: "90" }] },
+                { id: "datta-bhel", name: "Datta Bhel", items: [{ name: "Classic Pani Puri", price: "30" }, { name: "Chocolate Pani Puri", price: "60" }, { name: "Sukha Puri", price: "30" }, { name: "Masala Puri", price: "40" }, { name: "Dahi Puri", price: "50" }, { name: "Sev Puri", price: "40" }, { name: "Classic Bhel Puri", price: "40" }, { name: "Sukha Bhel", price: "35" }, { name: "Corn Bhel", price: "50" }] }
             ];
 
             const container = document.getElementById('menu-container');
             const WHATSAPP_NUMBER = "917385009275"; 
 
+            // Dark Mode Logic
+            function toggleDarkMode() {
+                const body = document.getElementById('body');
+                const btn = document.getElementById('theme-icon');
+                body.classList.toggle('dark-mode');
+                if(body.classList.contains('dark-mode')) {
+                    btn.innerText = '☀️';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    btn.innerText = '🌙';
+                    localStorage.setItem('theme', 'light');
+                }
+            }
+            // Check saved theme
+            if(localStorage.getItem('theme') === 'dark') { toggleDarkMode(); }
+
             // Render Menu
             menuData.forEach(hotel => {
-                let hotelSection = `
-                    <section id="${hotel.id}" class="mb-20">
-                        <div class="flex items-center mb-8">
-                            <h2 class="text-3xl font-bold border-l-4 border-[#D4AF37] pl-4">${hotel.name}</h2>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                `;
-
+                let hotelSection = `<section id="${hotel.id}" class="mb-20"><div class="flex items-center mb-8"><h2 class="text-3xl font-bold border-l-4 border-[#D4AF37] pl-4">${hotel.name}</h2></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">`;
                 hotel.items.forEach(item => {
                     const imgName = item.name.toLowerCase().replace(/ /g, '-').replace(/[()]/g, '');
                     const imgSrc = `images/${hotel.id}/${imgName}.jpg`;
                     const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=Hi GENZ FOOD, I want to order *${item.name}* from *${hotel.name}*`;
-
-                    hotelSection += `
-                        <div class="food-card bg-white rounded-2xl overflow-hidden shadow-sm flex flex-col">
-                            <div class="h-44 overflow-hidden relative">
-                                <img src="${imgSrc}" onerror="this.src='images/common-placeholder.jpg'" 
-                                     alt="${item.name}" class="w-full h-full object-cover">
-                                <div class="absolute top-2 right-2 bg-white/90 px-2 py-1 rounded-lg text-[10px] font-bold gold-text shadow-sm">
-                                    PREMIUM
-                                </div>
-                            </div>
-                            <div class="p-4 flex flex-col flex-grow">
-                                <h4 class="font-bold text-gray-800 text-lg mb-1 leading-tight">${item.name}</h4>
-                                <p class="text-[#B8860B] font-bold text-xl mb-4">${item.price}</p>
-                                <div class="mt-auto">
-                                    <a href="${waLink}" target="_blank" class="whatsapp-btn flex items-center justify-center gap-2 text-white py-3 rounded-xl font-bold shadow-lg shadow-green-100">
-                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                                        Order on WhatsApp
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    `;
+                    hotelSection += `<div class="food-card bg-white rounded-2xl overflow-hidden shadow-sm flex flex-col"><div class="h-44 overflow-hidden relative"><img src="${imgSrc}" onerror="this.src='images/common-placeholder.jpg'" alt="${item.name}" class="w-full h-full object-cover"><div class="absolute top-2 right-2 bg-white/90 px-2 py-1 rounded-lg text-[10px] font-bold gold-text shadow-sm text-black">PREMIUM</div></div><div class="p-4 flex flex-col flex-grow"><h4 class="font-bold text-gray-800 text-lg mb-1 leading-tight">${item.name}</h4><p class="text-[#B8860B] font-bold text-xl mb-4">₹${item.price}</p><div class="mt-auto"><a href="${waLink}" target="_blank" class="whatsapp-btn flex items-center justify-center gap-2 text-white py-3 rounded-xl font-bold shadow-lg shadow-green-100"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Order on WhatsApp</a></div></div></div>`;
                 });
-
                 hotelSection += `</div></section>`;
                 container.innerHTML += hotelSection;
             });
 
-            // --- SEARCH FILTER ---
+            // Search Function
             function filterMenu() {
                 const input = document.getElementById('searchInput').value.toLowerCase();
                 const cards = document.getElementsByClassName('food-card');
                 const sections = document.querySelectorAll('section');
-
                 for (let card of cards) {
                     const title = card.querySelector('h4').innerText.toLowerCase();
                     card.style.display = title.includes(input) ? "flex" : "none";
                 }
-
                 sections.forEach(section => {
                     const visibleCards = Array.from(section.querySelectorAll('.food-card')).filter(c => c.style.display !== "none");
                     section.style.display = visibleCards.length > 0 ? "block" : "none";
                 });
             }
 
-            // --- FEEDBACK & SECRET DELETE LOGIC ---
+            // Feedback & Secret Delete
             const feedbackForm = document.getElementById('feedbackForm');
             const reviewsContainer = document.getElementById('reviewsContainer');
-
             window.addEventListener('load', loadReviews);
-
             feedbackForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const name = document.getElementById('fbName').value;
                 const text = document.getElementById('fbText').value;
-                const timestamp = Date.now();
-
-                // 1. WhatsApp par message bhej raha hai
                 const fbLink = `https://wa.me/${WHATSAPP_NUMBER}?text=New Review from *${name}*: %0A%0A${text}`;
                 window.open(fbLink, '_blank');
-
-                // 2. Local website par save kar raha hai
-                const newReview = { id: timestamp, name, text };
+                const newReview = { id: Date.now(), name, text };
                 const reviews = JSON.parse(localStorage.getItem('genzFoodReviews')) || [];
                 reviews.push(newReview);
                 localStorage.setItem('genzFoodReviews', JSON.stringify(reviews));
-
                 renderReview(newReview);
                 this.reset();
             });
-
             function loadReviews() {
                 reviewsContainer.innerHTML = '';
                 const reviews = JSON.parse(localStorage.getItem('genzFoodReviews')) || [];
                 reviews.forEach(renderReview);
             }
-
             function renderReview(rev) {
-                const reviewHTML = `
-                    <div class="bg-gray-50 p-4 rounded-2xl border-l-4 border-[#D4AF37] comment-box" 
-                         id="rev-${rev.id}" onclick="handleTripleClick(event, ${rev.id})">
-                        <p class="font-bold text-sm text-gray-800">${rev.name}</p>
-                        <p class="text-gray-600 text-sm italic mt-1">"${rev.text}"</p>
-                        <span class="text-[9px] text-gray-400 uppercase mt-2 block">Customer Review</span>
-                    </div>
-                `;
+                const reviewHTML = `<div class="bg-gray-50 p-4 rounded-2xl border-l-4 border-[#D4AF37] comment-box" id="rev-${rev.id}" onclick="handleTripleClick(event, ${rev.id})"><p class="font-bold text-sm text-gray-800">${rev.name}</p><p class="text-gray-600 text-sm italic mt-1">"${rev.text}"</p><span class="text-[9px] text-gray-400 uppercase mt-2 block">Verified Review</span></div>`;
                 reviewsContainer.insertAdjacentHTML('afterbegin', reviewHTML);
             }
-
             function handleTripleClick(event, id) {
                 if (event.detail === 3) {
-                    const confirmDelete = confirm("Do you want to delete this comment?");
-                    if (confirmDelete) {
+                    if (confirm("Delete this comment?")) {
                         let reviews = JSON.parse(localStorage.getItem('genzFoodReviews')) || [];
                         reviews = reviews.filter(r => r.id !== id);
                         localStorage.setItem('genzFoodReviews', JSON.stringify(reviews));
@@ -334,14 +202,13 @@
         </script>
     </main>
 
-    <footer class="bg-white border-t border-gray-100 py-12">
+    <footer class="bg-white border-t border-gray-100 py-12 mt-10">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-2xl font-bold mb-4">GENZ <span class="text-[#D4AF37]">FOOD</span></h2>
-            <p class="text-gray-400 max-w-md mx-auto mb-6 text-sm">Premium Delivery Service</p>
+            <p class="text-gray-400 max-w-md mx-auto mb-6 text-sm">Premium Delivery Service for your village.</p>
             <p class="text-[10px] text-gray-300 uppercase tracking-widest">© 2025 GENZ FOOD</p>
         </div>
     </footer>
-
 </body>
 </html>
 
